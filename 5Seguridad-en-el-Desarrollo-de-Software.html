@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Bucle Creativo | Seguridad en el Desarrollo de Software</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, 'Segoe UI', 'Inter', 'Helvetica Neue', sans-serif;
+      background: linear-gradient(145deg, #f4f7fc 0%, #eef2f7 100%);
+      color: #1a2a3f;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+
+    /* paleta: rojo y azul modernos (azul profundo + rojo vibrante acento) */
+    :root {
+      --blue-deep: #0a2b4e;
+      --blue-bright: #1e4a76;
+      --red-accent: #dc2626;
+      --red-soft: #fee2e2;
+      --gray-light: #f9fafb;
+      --gray-card: #ffffff;
+      --shadow-md: 0 20px 35px -12px rgba(0, 0, 0, 0.1);
+      --border-radius: 28px;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    /* header especial */
+    .hero {
+      background: linear-gradient(135deg, var(--blue-deep) 0%, var(--blue-bright) 100%);
+      border-radius: var(--border-radius);
+      padding: 2.5rem 2rem;
+      margin-bottom: 2.5rem;
+      color: white;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "⚡🛡️";
+      font-size: 140px;
+      opacity: 0.08;
+      position: absolute;
+      bottom: -20px;
+      right: -10px;
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.2);
+      display: inline-block;
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin: 0.5rem 0 0.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-sub {
+      font-size: 1.25rem;
+      opacity: 0.9;
+      border-left: 3px solid var(--red-accent);
+      padding-left: 1rem;
+      margin-top: 0.75rem;
+    }
+
+    /* tarjetas y estructura */
+    .card {
+      background: var(--gray-card);
+      border-radius: 2rem;
+      padding: 1.8rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.03), 0 2px 6px rgba(0,0,0,0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s;
+      border: 1px solid rgba(0,0,0,0.03);
+    }
+
+    .card:hover {
+      box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(120deg, var(--blue-deep), var(--blue-bright));
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      border-left: 5px solid var(--red-accent);
+      padding-left: 1rem;
+    }
+
+    h3 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin: 1rem 0 0.75rem;
+      color: var(--blue-deep);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .highlight {
+      background: var(--red-soft);
+      padding: 0.1rem 0.3rem;
+      border-radius: 12px;
+      color: #b91c1c;
+      font-weight: 500;
+    }
+
+    .flex-images {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+      margin: 1.5rem 0;
+    }
+
+    .img-placeholder {
+      background: linear-gradient(145deg, #e0e7ff, #cbd5e6);
+      border-radius: 24px;
+      padding: 1rem 2rem;
+      text-align: center;
+      font-weight: 600;
+      color: var(--blue-deep);
+      box-shadow: inset 0 1px 3px #0001, 0 6px 12px -6px rgba(0,0,0,0.1);
+      flex: 1;
+      min-width: 180px;
+    }
+
+    .img-icon {
+      font-size: 3.5rem;
+      display: block;
+    }
+
+    code {
+      background: #1e293b;
+      color: #e2e8f0;
+      padding: 0.2rem 0.4rem;
+      border-radius: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+    }
+
+    pre {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 1rem;
+      border-radius: 1rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      font-size: 0.85rem;
+      font-family: monospace;
+    }
+
+    .btn-demo {
+      background: var(--blue-bright);
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .btn-demo:hover {
+      background: var(--blue-deep);
+      transform: scale(0.97);
+    }
+
+    /* juego test */
+    .quiz-container {
+      background: #ffffffea;
+      border-radius: 2rem;
+      padding: 1.5rem;
+      margin-top: 1rem;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(220,38,38,0.2);
+    }
+
+    .quiz-question {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .quiz-option {
+      background: #f1f5f9;
+      padding: 0.8rem 1rem;
+      border-radius: 60px;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1px solid transparent;
+      font-weight: 500;
+    }
+
+    .quiz-option:hover {
+      background: #e2e8f0;
+      transform: translateX(6px);
+    }
+
+    .quiz-feedback {
+      margin: 0.8rem 0;
+      font-weight: 500;
+      padding: 0.6rem;
+      border-radius: 2rem;
+    }
+
+    .correct-feedback {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .wrong-feedback {
+      background: #ffe4e4;
+      color: #991b1b;
+    }
+
+    .quiz-score {
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin: 1rem 0;
+    }
+
+    button {
+      background: var(--red-accent);
+      border: none;
+      padding: 0.7rem 1.8rem;
+      border-radius: 40px;
+      font-weight: bold;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+      margin-right: 0.8rem;
+    }
+
+    button:active {
+      transform: scale(0.96);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      padding: 1.5rem;
+      border-top: 1px solid rgba(0,0,0,0.05);
+      font-size: 0.85rem;
+      color: #4b5563;
+    }
+
+    @media (max-width: 700px) {
+      h1 { font-size: 2rem; }
+      .container { padding: 1rem; }
+      .hero { padding: 1.5rem; }
+      .quiz-question { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <!-- Encabezado fijo solicitado -->
+  <div class="hero">
+    <div class="hero-badge">⚡ ⋆ ｡°✩</div>
+    <h1>Bucle creativo</h1>
+    <div style="font-size:1.2rem; font-weight:500; margin-bottom:0.5rem;">Taller diseñado con el corazón de un docente y la mente de un programador.</div>
+    <div class="hero-sub">Tema: Seguridad en el Desarrollo de Software — Construye como un artesano digital, protege como un guardián estoico.</div>
+  </div>
+
+  <!-- 2. Objetivo de aprendizaje -->
+  <div class="card">
+    <h2>🎯 Objetivo de aprendizaje</h2>
+    <p style="font-size:1.1rem;">Analizar y aplicar los principios fundamentales de la seguridad en el desarrollo de software (confidencialidad, integridad, disponibilidad), identificando vulnerabilidades comunes como inyección de código o contraseñas débiles, para implementar buenas prácticas de validación, cifrado y control de acceso, desarrollando una actitud crítica, ética y resiliente frente a los desafíos del mundo digital, capaces de construir sistemas confiables que protejan los datos y la privacidad de las personas.</p>
+  </div>
+
+  <!-- 3. Competencia -->
+  <div class="card">
+    <h2>🧠 Competencia</h2>
+    <p>El estudiante diseña pequeños sistemas o fragmentos de software considerando la seguridad desde la fase inicial, aplicando la triada CIA, mitigando vulnerabilidades mediante validación de entradas, autenticación segura y control de privilegios, demostrando responsabilidad técnica y compromiso ético en la protección de la información.</p>
+  </div>
+
+  <!-- 4. Activación de la clase (historia + imagen) -->
+  <div class="card">
+    <h2>🔥 Activación de la clase: El caso del Colegio Estelar</h2>
+    <div class="flex-images">
+      <div class="img-placeholder"><span class="img-icon">🏫⚠️</span><br/>Sistema escolar hackeado</div>
+      <div class="img-placeholder"><span class="img-icon">🔓📉</span><br/>Notas modificadas sin autorización</div>
+    </div>
+    <p>Imagina que eres desarrollador del sistema "Notas360" en una unidad educativa de Quito. Una mañana, los estudiantes descubren que sus calificaciones fueron alteradas: un alumno común accedió al panel de administrador porque la contraseña del director era "admin123". Además, alguien inyectó código en el buscador de estudiantes y robó datos personales. <strong>¿Qué falló?</strong> La seguridad no fue una prioridad. Hoy aprenderás a blindar tus proyectos desde la primera línea de código. ¡La confianza de cientos de usuarios está en tus manos!</p>
+  </div>
+
+  <!-- 5. Contenido + narrativa envolvente -->
+  <div class="card">
+    <h2>📘 Tu caja de herramientas: Seguridad por diseño</h2>
+    <div class="flex-images">
+      <div class="img-placeholder"><span class="img-icon">🛡️🔐</span><br/>Tríada CIA</div>
+      <div class="img-placeholder"><span class="img-icon">🧪🐞</span><br/>Vulnerabilidades</div>
+    </div>
+    <p>La seguridad informática no es un conjunto de candados añadidos al final. Es como construir una casa: si los cimientos son débiles, cualquier tormenta la derrumba. Los tres pilares: <strong class="highlight">Confidencialidad</strong> (solo tú y quien tú quieras ven tus datos), <strong class="highlight">Integridad</strong> (nadie modifica tu información sin permiso) y <strong class="highlight">Disponibilidad</strong> (el sistema responde cuando lo necesitas).</p>
+    <p>En tu día a día como estudiante, usas apps con login, redes sociales, plataformas educativas. Detrás de cada botón, un programador decidió si validaba datos, si cifraba contraseñas, si aplicaba roles. Las vulnerabilidades como <strong>inyección SQL</strong> o <strong>contraseñas débiles</strong> no son magia negra: son descuidos. Y hoy vas a aprender a evitarlos con buenas prácticas.</p>
+  </div>
+
+  <!-- 6. Desarrollo de la actividad: conceptos detallados con ejemplos -->
+  <div class="card">
+    <h2>🔍 Desarrollo: Vulnerabilidades y contramedidas en acción</h2>
+    <h3>💉 Inyección de código (SQL Injection)</h3>
+    <p>Si un formulario pide tu nombre y el sistema concatena directamente la entrada, un atacante podría escribir <code>' OR '1'='1</code> y obtener acceso total. <strong>Solución:</strong> Validar siempre, usar consultas parametrizadas.</p>
+    <h3>🔑 Contraseñas débiles y autenticación</h3>
+    <p>Usar "123456" es como dejar la puerta de tu casa abierta. Implementa mínimo 8 caracteres, mayúsculas, números y símbolos. Además, <strong>nunca</strong> guardes texto plano; cifra con hash.</p>
+    <h3>📁 Control de acceso (Roles)</h3>
+    <p>El principio de mínimo privilegio: un alumno no debe poder editar notas. Definir roles (estudiante, docente, admin) y validar cada solicitud.</p>
+    <h3>🔒 Cifrado y protección de datos</h3>
+    <p>Usa HTTPS, cifra datos sensibles, anonimiza cuando no necesites identidad directa.</p>
+    <div class="img-placeholder" style="background:#eef2ff; margin-top:1rem;"><span class="img-icon">⚙️✅</span> Ejemplo mental: Validar entrada = frenar ataques</div>
+  </div>
+
+  <!-- 7. Desarrollo práctico: ejemplo interactivo + tarea propuesta -->
+  <div class="card">
+    <h2>💻 Desarrollo práctico: Simulador de login seguro</h2>
+    <p>A continuación, un mini simulador que refleja autenticación insegura vs reflexión de buenas prácticas. Observa el código mental y cómo se valida (simulación conceptual).</p>
+    <div style="background:#f1f5f9; border-radius: 1.5rem; padding: 1rem;">
+      <p><strong>🔐 Simulacro de validación (Front-end didáctico):</strong> Para entender la importancia de cifrado y control de acceso, presiona "Validar concepto".</p>
+      <button id="demoConceptoBtn">🧪 Validar Buena Práctica</button>
+      <div id="demoResultado" style="margin-top:1rem; font-style:italic;"></div>
+    </div>
+    <h3 style="margin-top: 1.5rem;">🚀 Tarea para el estudiante: "Escudo AntiVuln"</h3>
+    <p><strong>Contexto:</strong> Desarrolla (en pseudocódigo o JavaScript sencillo) una función de registro de usuarios para una plataforma educativa. Debe incluir: validación de que la contraseña tenga al menos 8 caracteres, un número y una mayúscula; almacenar la contraseña "cifrada" (simula con un hash básico usando btoa como ejemplo didáctico); implementar control de roles: si el usuario se registra como "admin" y no tiene código especial, denegar privilegios. Además, evitar inyección: al mostrar un mensaje de bienvenida, asegurar que no se ejecute código HTML malicioso.</p>
+    <p><strong>Reflexión:</strong> ¿Qué pasa si no validamos los datos? ¿Cómo proteges la confidencialidad de las contraseñas? Entrega un pequeño script comentado.</p>
+    <button id="mostrarPistaTarea">💡 Ver pista de solución (en consola)</button>
+  </div>
+
+  <!-- 8. Evaluación lúdica: test interactivo -->
+  <div class="card">
+    <h2>🎮 Evaluación lúdica: El desafío del guardián digital</h2>
+    <div class="quiz-container" id="quizContainer">
+      <div id="quizArea">
+        <!-- JS dinámico -->
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Diseñado por: Edwin Méndez J. — Bucle Creativo • Seguridad desde el corazón del código
+  </footer>
+</div>
+
+<script>
+  // ---------- Test interactivo (5 preguntas) ----------
+  const questions = [
+    {
+      text: "¿Qué representa la 'C' en la tríada CIA de seguridad informática?",
+      options: ["Copias de seguridad", "Confidencialidad", "Cifrado completo", "Control de acceso"],
+      correct: 1
+    },
+    {
+      text: "¿Cuál es un ejemplo típico de vulnerabilidad por inyección de código?",
+      options: ["Uso de HTTPS", "Introducir ' OR '1'='1 en un campo de búsqueda", "Contraseña con 12 caracteres", "Firewall actualizado"],
+      correct: 1
+    },
+    {
+      text: "¿Qué práctica evita almacenar contraseñas en texto plano?",
+      options: ["Registro en un archivo .txt", "Cifrado o hash de la contraseña", "Usar la misma contraseña para todos", "Mostrarla en pantalla"],
+      correct: 1
+    },
+    {
+      text: "El principio de 'mínimo privilegio' significa:",
+      options: ["Dar permisos de administrador a todos", "Asignar solo los accesos necesarios a cada usuario", "No usar contraseñas", "Cifrar todo el sistema"],
+      correct: 1
+    },
+    {
+      text: "¿Cuál es un riesgo de NO validar datos de entrada del usuario?",
+      options: ["Mejor rendimiento", "Ataques de inyección y corrupción de datos", "Diseño más bonito", "Aumento automático de seguridad"],
+      correct: 1
+    }
+  ];
+
+  let currentQ = 0;
+  let score = 0;
+  let answered = false;
+  let selectedOptionIdx = null;
+
+  function renderQuiz() {
+    const q = questions[currentQ];
+    let html = `<div class="quiz-question">❓ ${currentQ+1}. ${q.text}</div>`;
+    html += `<div class="quiz-options" id="quizOptions">`;
+    q.options.forEach((opt, idx) => {
+      let extraClass = "";
+      if (answered && selectedOptionIdx === idx) {
+        extraClass = idx === q.correct ? "correct-feedback" : "wrong-feedback";
+      }
+      html += `<div class="quiz-option ${extraClass}" data-opt-index="${idx}">${String.fromCharCode(65+idx)}. ${opt}</div>`;
+    });
+    html += `</div>`;
+    if (answered) {
+      const isCorrect = (selectedOptionIdx === q.correct);
+      html += `<div class="quiz-feedback ${isCorrect ? 'correct-feedback' : 'wrong-feedback'}">
+        ${isCorrect ? '✅ ¡Correcto! Bien pensado.' : '❌ Incorrecto. La respuesta correcta es: ' + q.options[q.correct]}
+      </div>`;
+    }
+    html += `<div class="quiz-score">🏆 Puntaje: ${score}/${questions.length}</div>`;
+    if (!answered) {
+      html += `<button id="nextOrCheckBtn">✔️ Verificar respuesta</button>`;
+    } else {
+      if (currentQ + 1 < questions.length) {
+        html += `<button id="nextOrCheckBtn">➡️ Siguiente pregunta</button>`;
+      } else {
+        html += `<button id="nextOrCheckBtn">🏁 Finalizar test</button>`;
+      }
+    }
+    document.getElementById("quizArea").innerHTML = html;
+
+    // attach events
+    document.querySelectorAll(".quiz-option").forEach(opt => {
+      opt.addEventListener("click", (e) => {
+        if (answered) return;
+        const idx = parseInt(opt.dataset.optIndex);
+        selectedOptionIdx = idx;
+        answered = true;
+        if (idx === q.correct) score++;
+        renderQuiz();
+      });
+    });
+    const nextBtn = document.getElementById("nextOrCheckBtn");
+    if (nextBtn) {
+      nextBtn.addEventListener("click", () => {
+        if (!answered) {
+          // si no ha seleccionado nada, mostrar mensaje suave
+          alert("Selecciona una respuesta antes de continuar.");
+          return;
+        }
+        if (currentQ + 1 < questions.length) {
+          currentQ++;
+          answered = false;
+          selectedOptionIdx = null;
+          renderQuiz();
+        } else {
+          // final del test
+          alert(`✨ ¡Has completado el desafío! Puntaje final: ${score}/${questions.length}. Reflexiona: cada respuesta es un paso para construir software más seguro. ✨`);
+          // reset opcional? se puede reiniciar, pero dejamos score visible
+          // reiniciar juego si desea: pero mejor ofrecer reset? opcional: mostrar mensaje final y opción de reiniciar
+          if(confirm("¿Quieres reiniciar el juego para practicar de nuevo?")) {
+            currentQ = 0;
+            score = 0;
+            answered = false;
+            selectedOptionIdx = null;
+            renderQuiz();
+          }
+        }
+      });
+    }
+  }
+
+  renderQuiz();
+
+  // demo concepto: Validación práctica
+  const demoBtn = document.getElementById("demoConceptoBtn");
+  const demoResult = document.getElementById("demoResultado");
+  if (demoBtn) {
+    demoBtn.addEventListener("click", () => {
+      demoResult.innerHTML = "🧠 Ejemplo de validación de entrada: Si un usuario escribe <code>&lt;script&gt;alert('hack')&lt;/script&gt;</code> en un campo, un sistema inseguro lo ejecutaría. Pero aplicando <strong>sanitización y validación</strong> (por ejemplo, reemplazar caracteres especiales) se evita la inyección. También simula cifrado: guardar contraseñas como hash protege la confidencialidad. ¡Así blindamos el código! 🔒";
+      demoResult.style.background = "#e6f7ec";
+      demoResult.style.padding = "0.8rem";
+      demoResult.style.borderRadius = "1rem";
+    });
+  }
+
+  // pista tarea: mostrar sugerencia en consola y alert
+  const pistaBtn = document.getElementById("mostrarPistaTarea");
+  if (pistaBtn) {
+    pistaBtn.addEventListener("click", () => {
+      console.log("🌟 PISTA TAREA: \n\nfunction registrarUsuario(nombre, pass, rol) {\n  // 1. Validar contraseña fuerte: mínimo 8 chars, 1 mayúscula, 1 número\n  const passOk = /^(?=.*[A-Z])(?=.*\\d).{8,}$/.test(pass);\n  if(!passOk) return 'Contraseña débil';\n  // 2. Cifrado simulado (btoa solo demo, en realidad hash)\n  const hash = btoa(pass);\n  // 3. Control de acceso: si es admin sin token especial, denegar\n  let rolFinal = (rol === 'admin') ? 'usuario_restringido' : rol;\n  // 4. Sanitizar entrada para evitar inyección\n  const nombreSeguro = nombre.replace(/[<>]/g, '');\n  return { usuario: nombreSeguro, hash, rol: rolFinal };\n}\n\nReflexión: la ética del programador construye confianza digital.");
+      alert("✨ Revisa la consola del navegador (F12) para ver una estructura guía para la tarea. ¡Integra validación, cifrado simulado y roles!");
+    });
+  }
+
+  // añadir sección extra para reforzar ejemplo práctico integrador: contextualización manual
+  const extraExample = document.createElement("div");
+  extraExample.className = "card";
+  extraExample.style.marginTop = "0";
+  extraExample.innerHTML = `<h2>📌 Conexión con la realidad: Sistema escolar resiliente</h2>
+  <p>Siguiendo el caso del colegio hackeado: aplicando cifrado de contraseñas (hash), validación de datos (rechazar caracteres SQL), control de roles (estudiante no puede acceder a /admin) y backups diarios, evitamos la pérdida de confianza. Cada línea de código puede ser escudo o vulnerabilidad. La seguridad es un camino de mejora continua, como la resiliencia estoica: anticipas el caos y te preparas.</p>
+  <div class="img-placeholder"><span class="img-icon">🛠️🧘</span> Resiliencia + Sinergia = Código seguro</div>`;
+  const containerDiv = document.querySelector(".container");
+  const footerRef = document.querySelector("footer");
+  containerDiv.insertBefore(extraExample, footerRef);
+</script>
+</body>
+</html>

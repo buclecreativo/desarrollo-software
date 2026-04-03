@@ -1,0 +1,1509 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ciclo de Vida del Desarrollo de Software - Bucle Creativo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --accent: #14b8a6;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --shadow: 0 10px 40px rgba(0,0,0,0.1);
+            --shadow-hover: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Header */
+        .header {
+            background: var(--gradient-1);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.3;
+            animation: moveGrid 20s linear infinite;
+        }
+
+        @keyframes moveGrid {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            animation: fadeInDown 1s ease;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .header .topic {
+            margin-top: 1.5rem;
+            font-size: 1.8rem;
+            font-weight: 600;
+            background: rgba(255,255,255,0.2);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            display: inline-block;
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease both;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card-title {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid var(--gradient-1);
+        }
+
+        .card-title i {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Objective */
+        .objective-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 5px solid #f59e0b;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .objective-box::before {
+            content: '\f3a3';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 4rem;
+            opacity: 0.1;
+            color: #f59e0b;
+        }
+
+        .objective-box h3 {
+            color: #92400e;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .objective-box p {
+            color: #78350f;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        /* Competency */
+        .competency-box {
+            background: var(--gradient-3);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .competency-box::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+
+        .competency-box h3 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .competency-box p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Activation */
+        .activation-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+            margin: 2rem 0;
+        }
+
+        .activation-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .activation-image {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .activation-image:hover {
+            transform: scale(1.05);
+        }
+
+        .activation-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Content sections */
+        .content-section {
+            margin: 2rem 0;
+        }
+
+        .content-section h3 {
+            color: var(--secondary);
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .content-section p {
+            text-align: justify;
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+
+        .content-image {
+            width: 100%;
+            border-radius: 15px;
+            margin: 2rem 0;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .content-image:hover {
+            transform: scale(1.02);
+        }
+
+        .content-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+        }
+
+        /* Phases Grid */
+        .phases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .phase-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .phase-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 0;
+        }
+
+        .phase-card:hover::before {
+            opacity: 0.05;
+        }
+
+        .phase-card:hover {
+            transform: translateX(10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .phase-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .phase-number {
+            background: var(--gradient-1);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .phase-card h4 {
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .phase-card p {
+            font-size: 0.95rem;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .phase-card ul {
+            margin-left: 1.5rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .phase-card li {
+            margin-bottom: 0.3rem;
+        }
+
+        /* Practical Example */
+        .practical-box {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-left: 5px solid var(--accent);
+        }
+
+        .practical-box h3 {
+            color: #065f46;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .practical-box p {
+            color: #047857;
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        .code-example {
+            background: var(--dark);
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            margin: 1rem 0;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-example::before {
+            content: 'Ejemplo de código';
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--primary);
+            color: white;
+            padding: 0.3rem 1rem;
+            font-size: 0.8rem;
+            border-radius: 0 10px 0 10px;
+        }
+
+        /* Challenge */
+        .challenge-box {
+            background: var(--gradient-2);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .challenge-box::before {
+            content: '\f0eb';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            font-size: 15rem;
+            opacity: 0.1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .challenge-box h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .challenge-box p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .challenge-btn {
+            background: white;
+            color: #f5576c;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .challenge-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        /* Quiz Game */
+        .quiz-container {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow);
+        }
+
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-header h3 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .quiz-progress {
+            background: #e2e8f0;
+            height: 10px;
+            border-radius: 10px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .quiz-progress-bar {
+            background: var(--gradient-1);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+
+        .question-container {
+            display: none;
+        }
+
+        .question-container.active {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .question {
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .answers {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .answer-btn {
+            background: #f1f5f9;
+            border: 2px solid #e2e8f0;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .answer-btn:hover {
+            background: #e0e7ff;
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .answer-btn.correct {
+            background: #d1fae5;
+            border-color: #10b981;
+            color: #065f46;
+        }
+
+        .answer-btn.incorrect {
+            background: #fee2e2;
+            border-color: #ef4444;
+            color: #991b1b;
+        }
+
+        .answer-btn.disabled {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            display: none;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct {
+            background: #d1fae5;
+            color: #065f46;
+            border-left: 4px solid #10b981;
+        }
+
+        .feedback.incorrect {
+            background: #fee2e2;
+            color: #991b1b;
+            border-left: 4px solid #ef4444;
+        }
+
+        .next-btn {
+            background: var(--gradient-1);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            display: none;
+            transition: all 0.3s ease;
+        }
+
+        .next-btn.show {
+            display: inline-block;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .next-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .quiz-results {
+            text-align: center;
+            display: none;
+        }
+
+        .quiz-results.show {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: var(--gradient-1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 2rem auto;
+            color: white;
+            font-size: 3rem;
+            font-weight: 700;
+            box-shadow: var(--shadow);
+        }
+
+        .score-message {
+            font-size: 1.5rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+
+        .restart-btn {
+            background: var(--gradient-2);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .restart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(245, 87, 108, 0.4);
+        }
+
+        /* Reflection */
+        .reflection-box {
+            background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-left: 5px solid #8b5cf6;
+        }
+
+        .reflection-box h3 {
+            color: #6d28d9;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .reflection-box p {
+            color: #5b21b6;
+            font-style: italic;
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* Key Idea */
+        .key-idea {
+            background: var(--dark);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .key-idea::before {
+            content: '\f13a';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            font-size: 10rem;
+            opacity: 0.05;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .key-idea h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .key-idea p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .footer p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .footer .heart {
+            color: var(--secondary);
+            animation: heartbeat 1.5s ease infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .header .topic {
+                font-size: 1.3rem;
+            }
+
+            .activation-content {
+                grid-template-columns: 1fr;
+            }
+
+            .phases-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .card-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1><i class="fas fa-infinity"></i> Bucle Creativo</h1>
+            <p class="subtitle">Taller diseñado con el corazón de un docente y la mente de un programador.</p>
+            <div class="topic">
+                <i class="fas fa-code-branch"></i> Ciclo de Vida del Desarrollo de Software
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Learning Objective -->
+        <section class="card fade-in">
+            <h2 class="card-title"><i class="fas fa-bullseye"></i> Objetivo de Aprendizaje</h2>
+            <div class="objective-box">
+                <h3><i class="fas fa-lightbulb"></i> ¿Qué lograrás?</h3>
+                <p>
+                    Analizar y aplicar las fases del Ciclo de Vida del Desarrollo de Software (SDLC) mediante la construcción de proyectos prácticos que integren competencias técnicas en programación, habilidades cognitivas de pensamiento sistémico y actitudes profesionales como la disciplina, la colaboración y la ética, para que puedas transformar problemas reales del contexto ecuatoriano en soluciones de software funcionales, organizadas y de calidad, comprendiendo que el desarrollo de software no es solo escribir código, sino seguir un proceso estructurado que garantice resultados sostenibles en el tiempo.
+                </p>
+            </div>
+
+            <div class="competency-box">
+                <h3><i class="fas fa-trophy"></i> Competencia</h3>
+                <p>
+                    Diseñar y gestionar proyectos de software aplicando metodológicamente las fases del SDLC (análisis, diseño, desarrollo, pruebas, implementación y mantenimiento), demostrando capacidad para trabajar en equipo, documentar procesos y adaptar soluciones tecnológicas a las necesidades del entorno, con una visión crítica que valore la calidad, la eficiencia y el impacto social del software desarrollado.
+                </p>
+            </div>
+        </section>
+
+        <!-- Activation -->
+        <section class="card fade-in">
+            <h2 class="card-title"><i class="fas fa-rocket"></i> Activación: El Puente que Nunca se Construyó</h2>
+            <div class="activation-content">
+                <div class="activation-text">
+                    <p>
+                        Imagina que vives en una pequeña comunidad de la sierra ecuatoriana. Durante años, los habitantes han soñado con un puente que conecte su barrio con el centro del pueblo. Un día, un grupo de jóvenes entusiastas decide construirlo. Sin planos, sin estudios del terreno, sin calcular los materiales, simplemente comienzan a colocar vigas y cemento donde creen que debe ir.
+                    </p>
+                    <p style="margin-top: 1rem;">
+                        A las pocas semanas, el puente se agrieta. A los dos meses, se hunde. El sueño se convierte en frustración, el esfuerzo en desperdicio, y la comunidad pierde la confianza.
+                    </p>
+                    <p style="margin-top: 1rem; font-weight: 600; color: var(--primary);">
+                        <i class="fas fa-question-circle"></i> ¿Te suena familiar? Esto es exactamente lo que pasa cuando desarrollamos software sin seguir un ciclo de vida. Sin planificación, sin diseño, sin pruebas... el resultado es inestable y lleno de errores.
+                    </p>
+                </div>
+                <div class="activation-image">
+                    <img src="https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=600&h=400&fit=crop" alt="Construcción de puente">
+                </div>
+            </div>
+        </section>
+
+        <!-- Content -->
+        <section class="card fade-in">
+            <h2 class="card-title"><i class="fas fa-book-open"></i> Contenido: El Viaje del Software</h2>
+            
+            <div class="content-section">
+                <p>
+                    Querido estudiante, el desarrollo de software es como emprender un viaje épico. No sales de casa sin saber a dónde vas, qué ruta tomarás o qué llevar en tu mochila. Del mismo modo, <strong>el software no se improvisa, se construye siguiendo un proceso</strong>. Este proceso se llama <strong>SDLC</strong> (Software Development Life Cycle) o Ciclo de Vida del Desarrollo de Software.
+                </p>
+
+                <div class="content-image">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=400&fit=crop" alt="Proceso de desarrollo">
+                </div>
+
+                <h3><i class="fas fa-seedling"></i> ¿Por qué es tan importante el SDLC?</h3>
+                <p>
+                    Sin un ciclo de vida definido, los proyectos de software suelen presentar: falta de organización, retrasos en la entrega, errores frecuentes e incremento de costos. El SDLC permite reducir estos riesgos mediante una planificación adecuada, asegurando que cada paso tenga un propósito claro y medible.
+                </p>
+
+                <h3><i class="fas fa-layer-group"></i> Las Seis Fases del SDLC</h3>
+                <p>
+                    Cada fase responde a una pregunta fundamental y se construye sobre la anterior, como los pisos de un edificio. Saltarse una fase es como construir una casa sin planos: el resultado será inestable y lleno de errores.
+                </p>
+
+                <div class="phases-grid">
+                    <div class="phase-card">
+                        <div class="phase-number">1</div>
+                        <h4>Análisis de Requisitos</h4>
+                        <p><strong>Pregunta clave:</strong> ¿Qué problema resolver?</p>
+                        <p><strong>Objetivo:</strong> Comprender qué necesita el usuario o cliente.</p>
+                        <ul>
+                            <li>Recolección de información (entrevistas, encuestas)</li>
+                            <li>Identificación de requisitos funcionales y no funcionales</li>
+                            <li>Documentación de requerimientos</li>
+                        </ul>
+                        <p style="margin-top: 0.5rem; font-size: 0.85rem;"><strong>Ejemplo:</strong> Definir que un sistema escolar debe registrar estudiantes, calificaciones y asistencia.</p>
+                    </div>
+
+                    <div class="phase-card">
+                        <div class="phase-number">2</div>
+                        <h4>Diseño del Sistema</h4>
+                        <p><strong>Pregunta clave:</strong> ¿Cómo resolverlo?</p>
+                        <p><strong>Objetivo:</strong> Definir cómo se construirá el software.</p>
+                        <ul>
+                            <li>Diseño de arquitectura</li>
+                            <li>Modelado de bases de datos</li>
+                            <li>Diseño de interfaces de usuario</li>
+                            <li>Selección de tecnologías</li>
+                        </ul>
+                        <p style="margin-top: 0.5rem; font-size: 0.85rem;"><strong>Ejemplo:</strong> Diseñar cómo se verán las pantallas del sistema y cómo se conectará con la base de datos.</p>
+                    </div>
+
+                    <div class="phase-card">
+                        <div class="phase-number">3</div>
+                        <h4>Desarrollo (Codificación)</h4>
+                        <p><strong>Pregunta clave:</strong> ¿Cómo construirlo?</p>
+                        <p><strong>Objetivo:</strong> Construir el software mediante código.</p>
+                        <ul>
+                            <li>Programación de funcionalidades</li>
+                            <li>Aplicación de buenas prácticas</li>
+                            <li>Integración de módulos</li>
+                        </ul>
+                        <p style="margin-top: 0.5rem; font-size: 0.85rem;"><strong>Ejemplo:</strong> Programar el módulo de registro de estudiantes.</p>
+                    </div>
+
+                    <div class="phase-card">
+                        <div class="phase-number">4</div>
+                        <h4>Pruebas (Testing)</h4>
+                        <p><strong>Pregunta clave:</strong> ¿Funciona correctamente?</p>
+                        <p><strong>Objetivo:</strong> Verificar que el software funcione correctamente.</p>
+                        <ul>
+                            <li>Pruebas unitarias</li>
+                            <li>Pruebas de integración</li>
+                            <li>Detección y corrección de errores</li>
+                        </ul>
+                        <p style="margin-top: 0.5rem; font-size: 0.85rem;"><strong>Ejemplo:</strong> Comprobar que los datos ingresados se guardan correctamente.</p>
+                    </div>
+
+                    <div class="phase-card">
+                        <div class="phase-number">5</div>
+                        <h4>Implementación</h4>
+                        <p><strong>Pregunta clave:</strong> ¿Está listo para usarse?</p>
+                        <p><strong>Objetivo:</strong> Poner el software en funcionamiento en un entorno real.</p>
+                        <ul>
+                            <li>Instalación del sistema</li>
+                            <li>Configuración del entorno</li>
+                            <li>Capacitación a usuarios</li>
+                        </ul>
+                        <p style="margin-top: 0.5rem; font-size: 0.85rem;"><strong>Ejemplo:</strong> Instalar el sistema en los computadores de una institución.</p>
+                    </div>
+
+                    <div class="phase-card">
+                        <div class="phase-number">6</div>
+                        <h4>Mantenimiento</h4>
+                        <p><strong>Pregunta clave:</strong> ¿Cómo mejorarlo?</p>
+                        <p><strong>Objetivo:</strong> Garantizar la continuidad, mejora y adaptación del software.</p>
+                        <ul>
+                            <li>Corrección de errores</li>
+                            <li>Actualizaciones</li>
+                            <li>Mejora de funcionalidades</li>
+                        </ul>
+                        <p style="margin-top: 0.5rem; font-size: 0.85rem;"><strong>Ejemplo:</strong> Agregar nuevas opciones o corregir fallos detectados por usuarios.</p>
+                    </div>
+                </div>
+
+                <h3><i class="fas fa-file-alt"></i> La Documentación: El Legado del Desarrollador</h3>
+                <p>
+                    Muchos proyectos fracasan no por falta de código, sino por falta de documentación. La documentación del software es el conjunto de documentos técnicos y funcionales que describen cómo se analiza, diseña, construye, utiliza y mantiene un sistema. Es un componente crítico del SDLC, ya que garantiza comprensión, trazabilidad y continuidad del proyecto.
+                </p>
+
+                <div class="content-image">
+                    <img src="https://images.unsplash.com/photo-1456324504439-367cee11d93d?w=800&h=400&fit=crop" alt="Documentación de software">
+                </div>
+
+                <p>
+                    <strong>Tipos de documentación:</strong>
+                </p>
+                <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                    <li><strong>Técnica:</strong> Dirigida a desarrolladores (arquitectura, diagramas, código comentado, APIs)</li>
+                    <li><strong>De usuario:</strong> Manuales, guías paso a paso, tutoriales, FAQs</li>
+                    <li><strong>De procesos:</strong> Requisitos, planificación, metodología, cronogramas</li>
+                    <li><strong>De mantenimiento:</strong> Historial de cambios, registro de errores, procedimientos de actualización</li>
+                </ul>
+
+                <div class="key-idea">
+                    <h3><i class="fas fa-key"></i> Idea Clave para Ti</h3>
+                    <p>
+                        "El código le dice a la computadora qué hacer, pero la documentación le dice a las personas cómo entenderlo y usarlo. Un buen desarrollador no solo programa, también explica, organiza y deja evidencia de su trabajo."
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practical Development -->
+        <section class="card fade-in">
+            <h2 class="card-title"><i class="fas fa-laptop-code"></i> Desarrollo Práctico: Manos a la Obra</h2>
+            
+            <div class="practical-box">
+                <h3><i class="fas fa-school"></i> Caso Práctico: Sistema de Gestión Escolar</h3>
+                <p>
+                    Imagina que tu colegio necesita un sistema para gestionar la información de los estudiantes. Vamos a aplicar el SDLC paso a paso:
+                </p>
+            </div>
+
+            <div class="content-section">
+                <h3><i class="fas fa-search"></i> Fase 1: Análisis</h3>
+                <p>
+                    <strong>Situación:</strong> Entrevistas con docentes, directivos y estudiantes revelan que necesitan:
+                </p>
+                <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                    <li>Registrar datos de estudiantes (nombre, cédula, grado, paralelo)</li>
+                    <li>Controlar asistencia diaria</li>
+                    <li>Registrar calificaciones por materia</li>
+                    <li>Generar reportes de rendimiento</li>
+                </ul>
+
+                <h3><i class="fas fa-pencil-ruler"></i> Fase 2: Diseño</h3>
+                <p>
+                    <strong>Arquitectura propuesta:</strong>
+                </p>
+                <div class="code-example">
+Base de datos: MySQL
+Backend: Python (Django) o PHP (Laravel)
+Frontend: HTML5, CSS3, JavaScript
+Interfaz: Diseño responsivo, amigable para docentes
+
+Estructura de tablas:
+- Estudiantes (id, nombre, cédula, fecha_nacimiento, grado)
+- Materias (id, nombre, profesor)
+- Calificaciones (id, estudiante_id, materia_id, nota, periodo)
+- Asistencia (id, estudiante_id, fecha, estado)
+                </div>
+
+                <h3><i class="fas fa-code"></i> Fase 3: Desarrollo</h3>
+                <p>
+                    <strong>Ejemplo de código - Registro de estudiante:</strong>
+                </p>
+                <div class="code-example">
+// Función para registrar un nuevo estudiante
+function registrarEstudiante(datos) {
+    // Validar datos
+    if (!datos.nombre || !datos.cedula) {
+        return { error: "Nombre y cédula son obligatorios" };
+    }
+    
+    // Verificar que la cédula no exista
+    if (existeCedula(datos.cedula)) {
+        return { error: "La cédula ya está registrada" };
+    }
+    
+    // Guardar en base de datos
+    const nuevoEstudiante = {
+        id: generarID(),
+        nombre: datos.nombre,
+        cedula: datos.cedula,
+        fechaNacimiento: datos.fechaNacimiento,
+        grado: datos.grado,
+        fechaRegistro: new Date()
+    };
+    
+    guardarEnBD(nuevoEstudiante);
+    return { exito: true, mensaje: "Estudiante registrado correctamente" };
+}
+                </div>
+
+                <h3><i class="fas fa-vial"></i> Fase 4: Pruebas</h3>
+                <p>
+                    <strong>Escenarios de prueba:</strong>
+                </p>
+                <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                    <li>Intentar registrar un estudiante sin cédula → Debe mostrar error</li>
+                    <li>Registrar dos estudiantes con la misma cédula → Debe rechazar el segundo</li>
+                    <li>Ingresar calificaciones mayores a 10 → Debe validar y corregir</li>
+                    <li>Generar reporte con estudiantes sin calificaciones → Debe manejar el caso</li>
+                </ul>
+
+                <h3><i class="fas fa-upload"></i> Fase 5: Implementación</h3>
+                <p>
+                    <strong>Plan de despliegue:</strong>
+                </p>
+                <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                    <li>Instalar el sistema en los servidores del colegio</li>
+                    <li>Configurar cuentas de usuario para cada docente</li>
+                    <li>Capacitar al personal en el uso del sistema (2 sesiones de 2 horas)</li>
+                    <li>Período de prueba de 2 semanas con acompañamiento técnico</li>
+                </ul>
+
+                <h3><i class="fas fa-tools"></i> Fase 6: Mantenimiento</h3>
+                <p>
+                    <strong>Actividades continuas:</strong>
+                </p>
+                <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                    <li>Corregir errores reportados por los usuarios</li>
+                    <li>Agregar nueva funcionalidad: envío de boletines por email</li>
+                    <li>Actualizar el sistema para cumplir con nuevas normativas del Ministerio</li>
+                    <li>Optimizar la velocidad de carga de reportes</li>
+                </ul>
+            </div>
+
+            <div class="challenge-box">
+                <h3><i class="fas fa-challenge"></i> Tu Desafío</h3>
+                <p>
+                    <strong>Situación:</strong> Una pequeña tienda de barrio en tu comunidad quiere digitalizar sus ventas. Actualmente, llevan el control en un cuaderno y tienen problemas para:
+                </p>
+                <p style="text-align: left; display: inline-block;">
+                    • Saber qué productos se venden más<br>
+                    • Controlar el inventario<br>
+                    • Calcular ganancias diarias y mensuales<br>
+                    • Identificar clientes frecuentes
+                </p>
+                <p style="margin-top: 1rem;">
+                    <strong>Tu misión:</strong> Aplica el SDLC completo para diseñar una solución. Debes:
+                </p>
+                <p style="text-align: left; display: inline-block;">
+                    1. Analizar los requisitos (¿qué necesita realmente la tienda?)<br>
+                    2. Diseñar la arquitectura (¿qué tecnologías usarías?)<br>
+                    3. Escribir pseudocódigo de al menos 2 funcionalidades clave<br>
+                    4. Planificar las pruebas (¿qué casos probarías?)<br>
+                    5. Proponer un plan de implementación<br>
+                    6. Sugerir actividades de mantenimiento
+                </p>
+                <button class="challenge-btn" onclick="alert('¡Excelente! Recuerda documentar cada fase de tu proyecto. El éxito está en el proceso, no solo en el resultado final.')">
+                    <i class="fas fa-check-circle"></i> ¡Acepto el Desafío!
+                </button>
+            </div>
+
+            <div class="reflection-box">
+                <h3><i class="fas fa-brain"></i> Reflexión Formativa</h3>
+                <p>
+                    "El SDLC no es solo un conjunto de pasos, es una forma de pensar como ingeniero de software: orden, disciplina y visión a largo plazo. Un buen desarrollador no empieza escribiendo código: empieza entendiendo el problema y siguiendo un proceso. La verdadera maestría no está en escribir código rápido, sino en construir soluciones que perduren."
+                </p>
+            </div>
+        </section>
+
+        <!-- Ludic Evaluation -->
+        <section class="card fade-in">
+            <div class="quiz-container">
+                <div class="quiz-header">
+                    <h3><i class="fas fa-gamepad"></i> Evaluación Lúdica</h3>
+                    <p>Demuestra lo que has aprendido sobre el SDLC</p>
+                    <div class="quiz-progress">
+                        <div class="quiz-progress-bar" id="progressBar"></div>
+                    </div>
+                    <p style="font-size: 0.9rem; color: var(--gray);">Pregunta <span id="currentQuestion">1</span> de 5</p>
+                </div>
+
+                <div id="quizContent">
+                    <!-- Question 1 -->
+                    <div class="question-container active" data-question="1">
+                        <div class="question">
+                            <i class="fas fa-question-circle" style="color: var(--primary);"></i>
+                            ¿Cuál es el objetivo principal de la fase de Análisis de Requisitos?
+                        </div>
+                        <div class="answers">
+                            <button class="answer-btn" data-correct="false" onclick="checkAnswer(this, false)">
+                                <i class="far fa-circle"></i>
+                                <span>Escribir el código del programa</span>
+                            </button>
+                            <button class="answer-btn" data-correct="true" onclick="checkAnswer(this, true)">
+                                <i class="far fa-circle"></i>
+                                <span>Comprender qué necesita el usuario o cliente</span>
+                            </button>
+                            <button class="answer-btn" data-correct="false" onclick="checkAnswer(this, false)">
+                                <i class="far fa-circle"></i>
+                                <span>Probar el software para encontrar errores</span>
+                            </button>
+                            <button class="answer-btn" data-correct="false" onclick="checkAnswer(this, false)">
+                                <i class="far fa-circle"></i>
+                                <span>Instalar el sistema en los computadores</span>
+                            </button>
+                        </div>
+                        <div class="feedback" id="feedback1"></div>
+                        <button class="next-btn" id="nextBtn1" onclick="nextQuestion(2)">
+                            Siguiente Pregunta <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <!-- Question 2 -->
+                    <div class="question-container" data-question="2">
+                        <div class="question">
+                            <i class="fas fa-question-circle" style="color: var(--primary);"></i>
+                            En la fase de Diseño del Sistema, ¿qué actividad NO corresponde?
+                        </div>
+                        <div class="answers">
+                            <button class="answer-btn" data-correct="false" onclick="checkAnswer(this, false)">
+                                <i class="far fa-circle"></i>
+                                <span>Diseño de arquitectura del software</span>
+                            </button>
+                            <button class="answer-btn" data-correct="false" onclick="checkAnswer(this, false)">
+                                <i class="far fa-circle"></i>
+                                <span>Modelado de bases de datos</span>
+                            </button>
+                            <button class="answer-btn" data-correct="true" onclick="checkAnswer(this, true)">
+                                <i class="far fa-circle"></i>
+                                <span>Corrección de errores del código</span>
+                            </button>
+                            <button class="answer-btn" data-correct="false" onclick="checkAnswer(this, false)">
+                                <i class="far fa-circle"></i>
+                                <span>Diseño de interfaces de usuario</span>
+                            </button>
+                        </div>
+                        <div class="feedback" id="feedback2"></div>
+                        <button class="next-btn" id="nextBtn2" onclick="nextQuestion(3)">
+                            Siguiente Pregunta <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <!-- Question 3 -->
+                    <div class="question-container" data-question="3">
+                        <div class="question">
+                            <i class="fas fa-question-circle" style="color: var(--primary);"></i>
+                            ¿Qué tipo de documentación está dirigida a los usuarios finales del sistema?
+                        </div>
+                        <div class="answers">
+                            <button class="answer-btn" data-correct="false" onclick="checkAnswer(this, false)">
+                                <i class="far fa-circle"></i>
+                                <span>Documentación técnica con diagramas UML</span>
+                            </button>
+                            <button class="answer-btn" data-correct="true" onclick="checkAnswer(this, true)">
+                                <i class="far fa-circle"></i>
+                                <span>Manuales de usuario y guías paso a paso</span>
+                            </button>
+                            <button class="answer-btn" data-correct="false" onclick="checkAnswer(this, false)">
+                                <i class="far fa-circle"></i>
+                                <span>Código comentado y APIs</span>
+                            </button>
+                            <button class="answer-btn" data-correct="false" onclick="checkAnswer(this, false)">
+                                <i class="far fa-circle"></i>
+                                <span>Historial de cambios y registro de errores</span>
+                            </button>
+                        </div>
+                        <div class="feedback" id="feedback3"></div>
+                        <button class="next-btn" id="nextBtn3" onclick="nextQuestion(4)">
+                            Siguiente Pregunta <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <!-- Question 4 -->
+                    <div class="question-container" data-question="4">
+                        <div class="question">
+                            <i class="fas fa-question-circle" style="color: var(--primary);"></i>
+                            ¿Cuál es la pregunta clave que responde la fase de Pruebas (Testing)?
+                        </div>
+                        <div class="answers">
+                            <button class="answer-btn" data-correct="false" onclick="checkAnswer(this, false)">
+                                <i class="far fa-circle"></i>
+                                <span>¿Qué problema resolver?</span>
+                            </button>
+                            <button class="answer-btn" data-correct="false" onclick="checkAnswer(this, false)">
+                                <i class="far fa-circle"></i>
+                                <span>¿Cómo construirlo?</span>
+                            </button>
+                            <button class="answer-btn" data-correct="true" onclick="checkAnswer(this, true)">
+                                <i class="far fa-circle"></i>
+                                <span>¿Funciona correctamente?</span>
+                            </button>
+                            <button class="answer-btn" data-correct="false" onclick="checkAnswer(this, false)">
+                                <i class="far fa-circle"></i>
+                                <span>¿Cómo mejorarlo?</span>
+                            </button>
+                        </div>
+                        <div class="feedback" id="feedback4"></div>
+                        <button class="next-btn" id="nextBtn4" onclick="nextQuestion(5)">
+                            Siguiente Pregunta <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <!-- Question 5 -->
+                    <div class="question-container" data-question="5">
+                        <div class="question">
+                            <i class="fas fa-question-circle" style="color: var(--primary);"></i>
+                            Según el SDLC, ¿cuál es el orden CORRECTO de las fases principales?
+                        </div>
+                        <div class="answers">
+                            <button class="answer-btn" data-correct="false" onclick="checkAnswer(this, false)">
+                                <i class="far fa-circle"></i>
+                                <span>Desarrollo → Diseño → Análisis → Pruebas → Implementación</span>
+                            </button>
+                            <button class="answer-btn" data-correct="true" onclick="checkAnswer(this, true)">
+                                <i class="far fa-circle"></i>
+                                <span>Análisis → Diseño → Desarrollo → Pruebas → Implementación → Mantenimiento</span>
+                            </button>
+                            <button class="answer-btn" data-correct="false" onclick="checkAnswer(this, false)">
+                                <i class="far fa-circle"></i>
+                                <span>Diseño → Análisis → Pruebas → Desarrollo → Mantenimiento</span>
+                            </button>
+                            <button class="answer-btn" data-correct="false" onclick="checkAnswer(this, false)">
+                                <i class="far fa-circle"></i>
+                                <span>Pruebas → Desarrollo → Diseño → Análisis → Implementación</span>
+                            </button>
+                        </div>
+                        <div class="feedback" id="feedback5"></div>
+                        <button class="next-btn" id="nextBtn5" onclick="showResults()">
+                            Ver Resultados <i class="fas fa-trophy"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="quiz-results" id="quizResults">
+                    <div class="score-circle" id="scoreCircle">0/5</div>
+                    <div class="score-message" id="scoreMessage"></div>
+                    <p id="resultText" style="font-size: 1.1rem; color: var(--gray); margin-bottom: 1rem;"></p>
+                    <button class="restart-btn" onclick="restartQuiz()">
+                        <i class="fas fa-redo"></i> Intentar de Nuevo
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>
+            Diseñado por: Edwin Méndez J. <span class="heart"><i class="fas fa-heart"></i></span>
+        </p>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.7;">
+            Con pasión por la enseñanza y la tecnología
+        </p>
+    </footer>
+
+    <script>
+        // Quiz functionality
+        let currentScore = 0;
+        let currentQuestionNum = 1;
+        let answeredQuestions = {};
+
+        function checkAnswer(button, isCorrect) {
+            const questionNum = button.closest('.question-container').dataset.question;
+            
+            // Disable all answer buttons for this question
+            const allButtons = button.closest('.answers').querySelectorAll('.answer-btn');
+            allButtons.forEach(btn => {
+                btn.classList.add('disabled');
+                if (btn.dataset.correct === "true") {
+                    btn.classList.add('correct');
+                    btn.innerHTML = btn.innerHTML.replace('far fa-circle', 'fas fa-check-circle');
+                }
+            });
+
+            // Show feedback
+            const feedback = document.getElementById(`feedback${questionNum}`);
+            const nextBtn = document.getElementById(`nextBtn${questionNum}`);
+            
+            if (isCorrect) {
+                button.classList.add('correct');
+                feedback.className = 'feedback correct show';
+                feedback.innerHTML = '<i class="fas fa-check-circle"></i> <strong>¡Correcto!</strong> ' + getCorrectExplanation(questionNum);
+                currentScore++;
+            } else {
+                button.classList.add('incorrect');
+                button.innerHTML = button.innerHTML.replace('far fa-circle', 'fas fa-times-circle');
+                feedback.className = 'feedback incorrect show';
+                feedback.innerHTML = '<i class="fas fa-times-circle"></i> <strong>Incorrecto</strong>. ' + getIncorrectExplanation(questionNum);
+            }
+
+            // Show next button
+            nextBtn.classList.add('show');
+            
+            // Mark as answered
+            answeredQuestions[questionNum] = true;
+            
+            // Update progress
+            updateProgress();
+        }
+
+        function getCorrectExplanation(num) {
+            const explanations = {
+                1: "El análisis de requisitos es fundamental para entender las necesidades reales del usuario antes de comenzar a construir cualquier solución.",
+                2: "La corrección de errores pertenece a la fase de Pruebas o Mantenimiento, no al Diseño. El diseño se enfoca en planificar cómo se construirá el sistema.",
+                3: "La documentación de usuario incluye manuales, tutoriales y guías que ayudan a las personas a utilizar el sistema de manera efectiva.",
+                4: "Las pruebas verifican que el software funcione correctamente antes de ser entregado al usuario final.",
+                5: "Este es el flujo lógico del SDLC: primero entendemos el problema (análisis), luego planeamos la solución (diseño), construimos (desarrollo), verificamos (pruebas), entregamos (implementación) y mejoramos (mantenimiento)."
+            };
+            return explanations[num];
+        }
+
+        function getIncorrectExplanation(num) {
+            const explanations = {
+                1: "Recuerda: antes de escribir una sola línea de código, debemos entender qué es lo que realmente necesita el usuario.",
+                2: "Piensa en el diseño como los planos de una casa. No corregimos errores en los planos, los creamos para evitar errores en la construcción.",
+                3: "Los diagramas UML y el código comentado son para desarrolladores. Los usuarios necesitan guías prácticas en lenguaje sencillo.",
+                4: "Las pruebas son como un examen final: verifican que todo funcione antes de entregar el producto.",
+                5: "Imagina construir una casa: primero necesitas saber qué casa quieres (análisis), luego hacer los planos (diseño), después construir (desarrollo), revisar que esté bien hecha (pruebas), mudarte (implementación) y hacer reparaciones (mantenimiento)."
+            };
+            return explanations[num];
+        }
+
+        function nextQuestion(num) {
+            // Hide current question
+            document.querySelector(`.question-container[data-question="${currentQuestionNum}"]`).classList.remove('active');
+            
+            // Show next question
+            currentQuestionNum = num;
+            document.querySelector(`.question-container[data-question="${num}"]`).classList.add('active');
+            
+            // Update question counter
+            document.getElementById('currentQuestion').textContent = num;
+            
+            // Scroll to top of quiz
+            document.querySelector('.quiz-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function updateProgress() {
+            const answered = Object.keys(answeredQuestions).length;
+            const percentage = (answered / 5) * 100;
+            document.getElementById('progressBar').style.width = percentage + '%';
+        }
+
+        function showResults() {
+            // Hide quiz content
+            document.getElementById('quizContent').style.display = 'none';
+            document.querySelector('.quiz-header').style.display = 'none';
+            
+            // Show results
+            const resultsDiv = document.getElementById('quizResults');
+            resultsDiv.classList.add('show');
+            
+            // Update score
+            document.getElementById('scoreCircle').textContent = `${currentScore}/5`;
+            
+            // Message based on score
+            const message = document.getElementById('scoreMessage');
+            const resultText = document.getElementById('resultText');
+            
+            if (currentScore === 5) {
+                message.textContent = '¡Excelente!';
+                message.style.color = '#10b981';
+                resultText.textContent = 'Has dominado el SDLC. Estás listo para aplicar estas fases en proyectos reales. ¡Sigue así!';
+            } else if (currentScore >= 3) {
+                message.textContent = '¡Muy bien!';
+                message.style.color = '#f59e0b';
+                resultText.textContent = 'Tienes una buena comprensión del SDLC. Repasa las fases donde tuviste dudas y estarás perfecto.';
+            } else {
+                message.textContent = 'Sigue practicando';
+                message.style.color = '#ef4444';
+                resultText.textContent = 'No te desanimes. El SDLC es un proceso que se aprende con práctica. Vuelve a revisar el contenido e inténtalo de nuevo.';
+            }
+            
+            // Scroll to results
+            resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function restartQuiz() {
+            // Reset variables
+            currentScore = 0;
+            currentQuestionNum = 1;
+            answeredQuestions = {};
+            
+            // Reset UI
+            document.getElementById('quizContent').style.display = 'block';
+            document.querySelector('.quiz-header').style.display = 'block';
+            document.getElementById('quizResults').classList.remove('show');
+            document.getElementById('progressBar').style.width = '0%';
+            document.getElementById('currentQuestion').textContent = '1';
+            
+            // Reset all questions
+            document.querySelectorAll('.question-container').forEach((container, index) => {
+                container.classList.remove('active');
+                if (index === 0) container.classList.add('active');
+                
+                // Reset buttons
+                const buttons = container.querySelectorAll('.answer-btn');
+                buttons.forEach(btn => {
+                    btn.classList.remove('correct', 'incorrect', 'disabled');
+                    btn.innerHTML = btn.innerHTML.replace('fas fa-check-circle', 'far fa-circle')
+                                                  .replace('fas fa-times-circle', 'far fa-circle');
+                });
+                
+                // Hide feedback
+                const questionNum = container.dataset.question;
+                document.getElementById(`feedback${questionNum}`).classList.remove('show');
+                document.getElementById(`nextBtn${questionNum}`).classList.remove('show');
+            });
+            
+            // Scroll to top
+            document.querySelector('.quiz-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Add parallax effect to header
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const header = document.querySelector('.header');
+            if (header) {
+                header.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+    </script>
+</body>
+</html>

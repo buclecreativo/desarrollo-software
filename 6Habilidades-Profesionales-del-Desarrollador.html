@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Bucle Creativo · Habilidades para el Desarrollador</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+      background: linear-gradient(145deg, #f4f9ff 0%, #eef2fa 100%);
+      color: #0a2540;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+
+    /* paleta moderna: rojo vibrante + azul profundo */
+    :root {
+      --primary-blue: #0a66c2;
+      --primary-red: #e63946;
+      --blue-dark: #0a2540;
+      --blue-light: #e8f0fe;
+      --red-soft: #ffe8e9;
+      --gray-light: #f8fafc;
+      --shadow-sm: 0 12px 30px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 20px 35px -12px rgba(0, 0, 0, 0.1);
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 1.5rem 2rem;
+    }
+
+    /* header creativo */
+    .hero {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      padding: 2rem 1rem 1.5rem;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(2px);
+      border-radius: 2rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary-red), var(--primary-blue));
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--primary-blue);
+      color: white;
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .tagline {
+      font-size: 1.2rem;
+      color: #2c3e66;
+      font-weight: 500;
+      border-top: 2px solid var(--primary-red);
+      display: inline-block;
+      padding-top: 0.5rem;
+    }
+
+    /* cards y secciones */
+    .card {
+      background: white;
+      border-radius: 2rem;
+      padding: 1.8rem 2rem;
+      margin-bottom: 2.2rem;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+      border: 1px solid rgba(0, 0, 0, 0.03);
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-3px);
+    }
+
+    h2 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      border-left: 6px solid var(--primary-red);
+      padding-left: 1rem;
+      margin-bottom: 1.2rem;
+      color: var(--blue-dark);
+    }
+
+    h3 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin: 1.2rem 0 0.8rem 0;
+      color: var(--primary-blue);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .img-placeholder {
+      background: var(--blue-light);
+      border-radius: 1.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+      margin: 1.5rem 0;
+      text-align: center;
+      border: 1px dashed var(--primary-blue);
+      transition: all 0.2s;
+    }
+
+    .img-placeholder svg, .img-placeholder i {
+      font-size: 3rem;
+    }
+
+    .grid-2cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.8rem;
+      margin: 1.5rem 0;
+    }
+
+    .skill-badge {
+      background: var(--red-soft);
+      color: var(--primary-red);
+      padding: 0.2rem 0.7rem;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 0.8rem;
+    }
+
+    .btn-test {
+      background: linear-gradient(95deg, var(--primary-blue), #2b7ecc);
+      border: none;
+      color: white;
+      font-weight: bold;
+      padding: 0.8rem 1.8rem;
+      border-radius: 60px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.2s;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-test:hover {
+      transform: scale(1.02);
+      background: linear-gradient(95deg, #0a5bb5, #1f6fb0);
+      box-shadow: 0 8px 18px rgba(10, 102, 194, 0.3);
+    }
+
+    /* Juego interactivo */
+    .quiz-container {
+      background: var(--blue-light);
+      border-radius: 1.8rem;
+      padding: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .question {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .option {
+      background: white;
+      border-radius: 60px;
+      padding: 0.7rem 1.2rem;
+      cursor: pointer;
+      border: 1px solid #cddfe7;
+      transition: 0.1s;
+      font-weight: 500;
+    }
+
+    .option:hover {
+      background: #e2effa;
+      border-color: var(--primary-blue);
+    }
+
+    .feedback {
+      margin: 0.8rem 0;
+      padding: 0.6rem;
+      border-radius: 1rem;
+      font-weight: 500;
+    }
+
+    .score {
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      padding: 1.5rem;
+      border-top: 1px solid rgba(0,0,0,0.05);
+      color: #4b6b8f;
+      font-weight: 500;
+    }
+
+    @media (max-width: 750px) {
+      .container {
+        padding: 1rem;
+      }
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+      .grid-2cols {
+        grid-template-columns: 1fr;
+      }
+      .card {
+        padding: 1.2rem;
+      }
+    }
+
+    .code-block {
+      background: #0a1e2c;
+      color: #eef4ff;
+      padding: 1rem;
+      border-radius: 1.2rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+
+    .highlight {
+      background: var(--red-soft);
+      padding: 0.2rem 0.4rem;
+      border-radius: 12px;
+      font-weight: 600;
+      color: var(--primary-red);
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <!-- Encabezado fijo solicitado -->
+  <div class="hero">
+    <div class="badge">🧠 Bucle creativo · Taller diseñado con el corazón de un docente y la mente de un programador.</div>
+    <h1>✨ Código & Sinergia:<br>Las 6 Habilidades del Desarrollador ✨</h1>
+    <div class="tagline">Piensa en equipo · Comunica · Resuelve · Transforma</div>
+  </div>
+
+  <!-- 1. Objetivo de aprendizaje -->
+  <div class="card">
+    <h2>🎯 Objetivo de aprendizaje</h2>
+    <p style="font-size:1.1rem; line-height:1.5;"><strong>Desarrollar</strong> un pensamiento crítico, colaborativo y resiliente aplicando los principios de trabajo en equipo, comunicación efectiva, gestión del tiempo, resolución de problemas y pensamiento analítico, para construir soluciones de software con impacto real, empatía y excelencia técnica. A través de desafíos prácticos y reflexión consciente, el estudiante ecuatoriano reconocerá que programar es una actividad humana, social y transformadora, donde cada error es una oportunidad de aprendizaje y cada conversación fortalece el propósito colectivo.</p>
+  </div>
+
+  <!-- 2. Competencia -->
+  <div class="card">
+    <h2>⭐ Competencia a alcanzar</h2>
+    <p><strong>“Integrar habilidades socioemocionales y técnicas (comunicación asertiva, trabajo colaborativo, gestión del tiempo, resolución metódica de problemas y pensamiento crítico) para afrontar proyectos de desarrollo de software de forma eficiente, ética y creativa, demostrando resiliencia ante los desafíos y valorando la diversidad de roles dentro de un equipo.”</strong></p>
+  </div>
+
+  <!-- Activación de la clase: historia + imagen -->
+  <div class="card">
+    <h2>🔥 Activación de la clase · El bug que salvó el proyecto</h2>
+    <div class="img-placeholder">
+      <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" fill="#E63946"/>
+      </svg>
+      <span style="margin-left: 12px; font-size:1rem;">✨ Equipo “Byte resiliente” · Un error, una oportunidad</span>
+    </div>
+    <p>Imagina que estás en segundo de bachillerato, y junto a tres compañeros desarrollan una app para apoyar a pequeños agricultores de su comunidad. El primer día todo parece genial, pero a mitad del proyecto nadie se comunica, algunos entregan tareas tarde, y el código colapsa. El caos reina... Hasta que deciden aplicar <strong>trabajo en equipo, escucha activa y gestión del tiempo</strong>. No solo salvaron la app, sino que aprendieron que el verdadero motor del software son las personas. ¿Listo para convertirte en ese tipo de programador? 💪</p>
+  </div>
+
+  <!-- Contenido principal + narrativa envolvente -->
+  <div class="card">
+    <h2>📘 Contenido · Habilidades que transforman</h2>
+    <div class="img-placeholder">
+      <span style="font-size:2.2rem;">🤝💬⚙️🧠</span>
+      <span style="margin-left:10px;">Sincronía en el código y en el alma</span>
+    </div>
+    <p>Programar no es solo sentarse frente a una pantalla: es un acto colectivo. <span class="highlight">El trabajo en equipo</span> permite construir proyectos más complejos y con menos errores. La <span class="highlight">comunicación efectiva</span> evita que los requisitos se distorsionen. La <span class="highlight">gestión del tiempo</span> convierte el caos en ritmo. La <span class="highlight">resolución de problemas</span> es el arte de descomponer un error hasta hallar la luz. Y el <span class="highlight">pensamiento crítico</span> te lleva más allá: ¿es esta la mejor solución? ¿Por qué funciona? Como un ingeniero estoico, aceptarás los bugs sin miedo, los transformarás en aprendizaje y construirás con propósito. Cada línea de código es una conversación con el futuro.</p>
+    <p>En equipos ágiles, las reuniones diarias (daily) afinan la dirección. Usar Git no es solo control de versiones, es confianza. Y recuerda: un equipo no es el que tiene los mejores programadores, sino el que mejor sabe trabajar unido. 🌟</p>
+  </div>
+
+  <!-- Desarrollo detallado de cada habilidad (práctico) -->
+  <div class="card">
+    <h2>🛠️ Desarrollo de habilidades · Ejemplos contextualizados</h2>
+    <div class="grid-2cols">
+      <div>
+        <h3>🤝 Trabajo en equipo</h3>
+        <p><strong>Caso:</strong> En un proyecto escolar de app de reciclaje, asignen roles (frontend, backend, tester, documentador). Usen GitHub Projects para tareas. Cada viernes retroalimentación. <br>✅ Resultado: coordinación + compromiso.</p>
+      </div>
+      <div>
+        <h3>💬 Comunicación efectiva</h3>
+        <p><strong>Práctica:</strong> Antes de escribir código, explica con tus palabras el problema a tu compañero. Aplica “escucha activa”: repite lo que entendiste. Usa comentarios claros en el código. 📝 Ejemplo: “// valida que el usuario tenga más de 18 años”.</p>
+      </div>
+      <div>
+        <h3>⏱️ Gestión del tiempo</h3>
+        <p><strong>Técnica Pomodoro</strong>: 25 min de código, 5 min de descanso. Prioriza con Matriz de Eisenhower. Para un proyecto de 2 semanas, divide tareas: “diseño BD”, “API”, “front”. <br> Evita la procrastinación: empieza por la tarea más incómoda.</p>
+      </div>
+      <div>
+        <h3>🧩 Resolución de problemas</h3>
+        <p><strong>Divide y vencerás:</strong> Si una función falla, aísla partes. Ejemplo: formulario no guarda datos → revisa conexión, luego consulta SQL, luego validación. Documenta cada paso. No rendirse es la clave.</p>
+      </div>
+    </div>
+    <h3>🧠 Pensamiento crítico en acción</h3>
+    <p>Antes de copiar una solución de internet, pregúntate: ¿por qué funciona? ¿hay una alternativa más eficiente? Cuestiona supuestos: “siempre usé este algoritmo, pero tal vez un enfoque recursivo sea más limpio”. Realiza code reviews con respeto. Ser crítico no es ser negativo, es buscar la excelencia.</p>
+  </div>
+
+  <!-- Desarrollo práctico con código interactivo / ejemplo y desafío propuesto -->
+  <div class="card">
+    <h2>💻 Desarrollo práctico · ¡Manos al código!</h2>
+    <p><strong>Ejemplo contextualizado:</strong> Simulemos un problema típico de un desarrollador junior: Un sistema de notas escolares debe calcular el promedio y determinar si el estudiante aprueba (nota >= 7). Sin embargo, el código original tiene errores lógicos y no considera listas vacías. Aplica <strong>resolución de problemas + pensamiento crítico</strong>.</p>
+    <div class="code-block">
+      // Código con errores (versión inicial)<br>
+      function calcularPromedio(notas) {<br>
+      &nbsp;&nbsp;let suma = 0;<br>
+      &nbsp;&nbsp;for(let i = 0; i <= notas.length; i++) { suma += notas[i]; }<br>
+      &nbsp;&nbsp;let promedio = suma / notas.length;<br>
+      &nbsp;&nbsp;if(promedio >= 7) return "Aprobado"; else return "Reprobado";<br>
+      }<br>
+      // 🚨 Error: bucle desborda índice, no maneja array vacío.
+    </div>
+    <p><strong>Reflexión:</strong> ¿Cuál es el problema? ¿Cómo lo solucionarías? Aplica pensamiento crítico y luego prueba la versión corregida:</p>
+    <div class="code-block">
+      // Solución mejorada<br>
+      function calcularPromedioSeguro(notas) {<br>
+      &nbsp;&nbsp;if(!notas || notas.length === 0) return "Sin notas";<br>
+      &nbsp;&nbsp;let suma = 0;<br>
+      &nbsp;&nbsp;for(let i = 0; i < notas.length; i++) { suma += notas[i]; }<br>
+      &nbsp;&nbsp;let promedio = suma / notas.length;<br>
+      &nbsp;&nbsp;return promedio >= 7 ? "✅ Aprobado" : "❌ Reprobado";<br>
+      }<br>
+      // Prueba: calcularPromedioSeguro([8,9,7]) → Aprobado
+    </div>
+    <h3>🚀 Desafío del estudiante (Tarea integradora)</h3>
+    <p><strong>Contexto:</strong> Tu equipo de desarrollo debe crear una pequeña función que ayude a un supermercado comunitario a calcular el total de una compra con descuento por volumen. Debes <strong>trabajar colaborativamente</strong> (imagina roles), <strong>comunicar</strong> la solución, <strong>gestionar el tiempo</strong> en 30 minutos, <strong>resolver el problema</strong> de lógica y <strong>aplicar pensamiento crítico</strong> para elegir la mejor estructura. Escribe una función <code>calcularTotalConDescuento(items, umbralDescuento)</code> que reciba un array de objetos {precio, cantidad} y un umbral (ej: si el total sin descuento > 50$, aplica 10% descuento). Devuelve el total final. Incluye manejo de errores, claridad y comenta tu razonamiento. ¡Demuestra que dominas las 6 habilidades!</p>
+  </div>
+
+  <!-- Evaluación lúdica: test interactivo -->
+  <div class="card">
+    <h2>🎮 Evaluación lúdica · Pon a prueba tu talento</h2>
+    <p>Responde este quiz interactivo. Gana puntos, aprende jugando y consolida las habilidades del desarrollador profesional.</p>
+    <div id="quizApp" class="quiz-container">
+      <!-- JS dinámico -->
+    </div>
+  </div>
+
+  <footer>
+    Diseñado por: Edwin Méndez J. · Inspiración estoica + sinergia · Habilidades para la vida y el código
+  </footer>
+</div>
+
+<script>
+  // --------------------------------------------------------------
+  // TEST INTERACTIVO - 5 preguntas sobre las 6 habilidades
+  // --------------------------------------------------------------
+  const questions = [
+    {
+      text: "¿Cuál es uno de los principales beneficios del trabajo en equipo en el desarrollo de software?",
+      options: [
+        "Escribir código más rápido sin comunicación",
+        "Reducir errores mediante revisión conjunta y compartir ideas",
+        "Eliminar la necesidad de usar control de versiones",
+        "Trabajar cada uno por separado sin reuniones"
+      ],
+      correct: 1
+    },
+    {
+      text: "¿Qué técnica de gestión del tiempo utiliza intervalos de 25 minutos de trabajo seguidos de breves descansos?",
+      options: [
+        "Matriz de Eisenhower",
+        "Lista de tareas (To-Do List)",
+        "Técnica Pomodoro",
+        "Planificación por objetivos"
+      ],
+      correct: 2
+    },
+    {
+      text: "¿Cuál es una característica fundamental del pensamiento crítico en programación?",
+      options: [
+        "Aceptar la primera solución que funcione sin analizar",
+        "Copiar código de internet sin entenderlo",
+        "Analizar, cuestionar y evaluar información de forma objetiva",
+        "Evitar preguntar para no molestar al equipo"
+      ],
+      correct: 2
+    },
+    {
+      text: "Según el documento, ¿cuál es un error común en la comunicación efectiva?",
+      options: [
+        "Documentar lo importante",
+        "Escuchar activamente",
+        "Suponer en lugar de preguntar",
+        "Usar ejemplos y demostraciones"
+      ],
+      correct: 2
+    },
+    {
+      text: "¿Qué etapa del proceso de resolución de problemas consiste en dividir el problema en partes pequeñas e identificar patrones?",
+      options: [
+        "Implementación",
+        "Comprensión del problema",
+        "Análisis",
+        "Evaluación"
+      ],
+      correct: 2
+    }
+  ];
+
+  let currentQuestionIndex = 0;
+  let score = 0;
+  let quizAnswered = false;
+  let selectedOptionIdx = null;
+
+  function renderQuiz() {
+    const quizContainer = document.getElementById('quizApp');
+    if (!quizContainer) return;
+
+    if (currentQuestionIndex >= questions.length) {
+      // Fin del juego, mostrar resultados
+      quizContainer.innerHTML = `
+        <div style="text-align:center; padding:1rem;">
+          <h3>🏆 ¡Has completado el desafío! 🏆</h3>
+          <p style="font-size:1.6rem; font-weight:bold;">Tu puntuación: ${score} / ${questions.length}</p>
+          <p>${score === questions.length ? "🌟 ¡Dominas las habilidades del desarrollador! Eres un bucle creativo." : "📚 ¡Sigue practicando! Revisa los conceptos y vuélvelo a intentar."}</p>
+          <button class="btn-test" id="resetQuiz">🔄 Jugar de nuevo</button>
+        </div>
+      `;
+      const resetBtn = document.getElementById('resetQuiz');
+      if (resetBtn) resetBtn.addEventListener('click', () => {
+        currentQuestionIndex = 0;
+        score = 0;
+        quizAnswered = false;
+        selectedOptionIdx = null;
+        renderQuiz();
+      });
+      return;
+    }
+
+    const q = questions[currentQuestionIndex];
+    let optionsHtml = '';
+    q.options.forEach((opt, idx) => {
+      let additionalClass = '';
+      let disabledAttr = '';
+      if (quizAnswered) disabledAttr = 'style="pointer-events:none; opacity:0.7;"';
+      optionsHtml += `<div class="option" data-opt-index="${idx}" ${disabledAttr}>${String.fromCharCode(65+idx)}. ${opt}</div>`;
+    });
+
+    let feedbackHtml = '';
+    let nextButton = '';
+    if (quizAnswered) {
+      const isCorrect = (selectedOptionIdx === q.correct);
+      if (isCorrect) feedbackHtml = `<div class="feedback" style="background:#c8f0e1; color:#0a5e3a;">✅ ¡Correcto! +1 punto. Bien pensado.</div>`;
+      else feedbackHtml = `<div class="feedback" style="background:#ffe0e0; color:#b91c1c;">❌ Incorrecto. La respuesta correcta era: ${String.fromCharCode(65+q.correct)}. ${q.options[q.correct]}. ¡Sigue aprendiendo!</div>`;
+      nextButton = `<button class="btn-test" id="nextQuestion">➡ Siguiente pregunta</button>`;
+    } else {
+      nextButton = `<button class="btn-test" id="submitAnswer" style="background:#2c7cb6;">✓ Verificar respuesta</button>`;
+    }
+
+    const scoreText = `<div class="score">🎯 Puntaje actual: ${score} / ${questions.length}</div>`;
+
+    quizContainer.innerHTML = `
+      ${scoreText}
+      <div class="question">📌 Pregunta ${currentQuestionIndex+1} de ${questions.length}:<br> ${q.text}</div>
+      <div class="options" id="optionsList">
+        ${optionsHtml}
+      </div>
+      ${feedbackHtml}
+      <div style="margin-top:1rem;">${nextButton}</div>
+    `;
+
+    // Eventos
+    const optionsDivs = document.querySelectorAll('#optionsList .option');
+    optionsDivs.forEach(opt => {
+      opt.addEventListener('click', (e) => {
+        if (quizAnswered) return;
+        // quitar selección previa visual
+        optionsDivs.forEach(el => el.style.background = 'white');
+        opt.style.background = '#d9efff';
+        opt.style.borderColor = '#0a66c2';
+        selectedOptionIdx = parseInt(opt.getAttribute('data-opt-index'));
+      });
+    });
+
+    const submitBtn = document.getElementById('submitAnswer');
+    if (submitBtn) {
+      submitBtn.addEventListener('click', () => {
+        if (quizAnswered) return;
+        if (selectedOptionIdx === undefined || selectedOptionIdx === null) {
+          alert("🌟 Por favor, selecciona una opción antes de continuar.");
+          return;
+        }
+        quizAnswered = true;
+        if (selectedOptionIdx === q.correct) {
+          score++;
+        }
+        renderQuiz(); // re-render con feedback
+      });
+    }
+
+    const nextBtn = document.getElementById('nextQuestion');
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        currentQuestionIndex++;
+        quizAnswered = false;
+        selectedOptionIdx = null;
+        renderQuiz();
+      });
+    }
+  }
+
+  // inicializar el quiz al cargar la página
+  window.addEventListener('DOMContentLoaded', () => {
+    renderQuiz();
+  });
+</script>
+
+<!-- pequeña interacción extra para hacer más atractivo -->
+<style>
+  .option {
+    transition: all 0.15s;
+  }
+  button {
+    border: none;
+    cursor: pointer;
+  }
+  .code-block {
+    font-size: 0.85rem;
+  }
+  .card {
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+</style>
+</body>
+</html>

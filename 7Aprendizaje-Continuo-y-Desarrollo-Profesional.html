@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Bucle Creativo · Aprendizaje Continuo y Desarrollo Profesional</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, 'Segoe UI', 'Inter', 'Helvetica Neue', sans-serif;
+      background: #f0f4fa;
+      color: #0a2540;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+
+    /* paleta moderna: rojo cálido + azul profundo */
+    :root {
+      --red-accent: #e63946;
+      --red-light: #ffd6da;
+      --blue-deep: #1e3a8a;
+      --blue-soft: #d9e6ff;
+      --blue-mid: #2c5f8a;
+      --gray-light: #f8fafc;
+      --shadow-md: 0 20px 30px -12px rgba(0, 0, 0, 0.08);
+      --border-radius: 2rem;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    /* header */
+    .hero {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: white;
+      border-radius: 0 0 3rem 3rem;
+      padding: 2rem 2rem 3rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--red-accent);
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+      background: linear-gradient(to right, #fff, #b0d4ff);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .subhead {
+      font-size: 1.1rem;
+      color: #cbd5e6;
+      border-left: 3px solid var(--red-accent);
+      padding-left: 1rem;
+      margin: 1rem 0 0.5rem;
+    }
+
+    /* secciones generales */
+    section {
+      background: white;
+      border-radius: 2rem;
+      padding: 2rem;
+      margin-bottom: 2.5rem;
+      box-shadow: var(--shadow-md);
+      transition: transform 0.2s ease;
+    }
+
+    h2 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--blue-deep);
+      border-left: 6px solid var(--red-accent);
+      padding-left: 1rem;
+    }
+
+    h3 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin: 1.5rem 0 0.75rem;
+      color: #0f3b5c;
+    }
+
+    .card-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .card {
+      background: var(--gray-light);
+      padding: 1.2rem;
+      border-radius: 1.5rem;
+      flex: 1 1 240px;
+      border-bottom: 3px solid var(--red-accent);
+    }
+
+    .btn-code {
+      background: #0f172a;
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 40px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-code:hover {
+      background: var(--red-accent);
+      transform: scale(0.97);
+    }
+
+    pre {
+      background: #1e293b;
+      color: #e2e8f0;
+      padding: 1rem;
+      border-radius: 1rem;
+      overflow-x: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      margin: 1rem 0;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 1.5rem;
+      margin: 1rem 0;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    }
+
+    .flex-img {
+      display: flex;
+      justify-content: center;
+    }
+
+    /* juego test */
+    .quiz-container {
+      background: #eef2ff;
+      border-radius: 2rem;
+      padding: 1.8rem;
+      margin-top: 1rem;
+    }
+
+    .quiz-question {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 1.2rem;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .quiz-option {
+      background: white;
+      border-radius: 60px;
+      padding: 0.7rem 1.2rem;
+      border: 1px solid #cbd5e1;
+      cursor: pointer;
+      transition: 0.1s;
+    }
+
+    .quiz-option:hover {
+      background: var(--blue-soft);
+      border-color: var(--blue-deep);
+    }
+
+    .feedback {
+      margin: 0.5rem 0;
+      font-weight: 500;
+    }
+
+    .correct-feedback {
+      color: #2b9348;
+    }
+
+    .incorrect-feedback {
+      color: var(--red-accent);
+    }
+
+    .quiz-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .next-btn {
+      background: var(--blue-deep);
+      color: white;
+      border: none;
+      padding: 0.7rem 1.5rem;
+      border-radius: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .next-btn:disabled {
+      background: #94a3b8;
+      cursor: not-allowed;
+    }
+
+    .score {
+      font-size: 1.3rem;
+      font-weight: 700;
+      background: white;
+      padding: 0.3rem 1rem;
+      border-radius: 60px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.85rem;
+      color: #475569;
+      border-top: 1px solid #cbd5e1;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 700px) {
+      .container {
+        padding: 1rem;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+      section {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="hero">
+  <div class="container" style="padding-top: 0.5rem;">
+    <div class="hero-badge">🧠 Bucle Creativo · Taller Vivencial</div>
+    <h1>Nunca dejas de aprender:<br> el código que transforma tu futuro</h1>
+    <div class="subhead">Taller diseñado con el corazón de un docente y la mente de un programador.</div>
+    <div class="subhead" style="margin-top: 0.5rem;">Tema: Aprendizaje continuo · Autoformación · Adaptación tecnológica · Ética profesional</div>
+  </div>
+</div>
+
+<div class="container">
+  <!-- Objetivo de aprendizaje -->
+  <section>
+    <h2>🎯 Brújula del aprendizaje</h2>
+    <p style="font-size: 1.1rem; background: #eef2ff; padding: 1.2rem; border-radius: 1.5rem;"><strong>Objetivo:</strong> Desarrollar una mentalidad de aprendizaje continuo autónomo, aplicando estrategias de autoformación, adaptación a nuevas tecnologías y principios éticos en el desarrollo de software, mediante la exploración activa de casos reales y la construcción de proyectos conscientes, con el fin de fortalecer la resiliencia profesional y el compromiso social como futuros creadores digitales en el contexto ecuatoriano.</p>
+    <div style="margin-top: 1rem;"><strong>🧩 Competencia a alcanzar:</strong> El estudiante gestiona su propio aprendizaje tecnológico, se adapta a entornos cambiantes y actúa con integridad ética en la construcción de software, demostrando curiosidad, disciplina y responsabilidad.</div>
+  </section>
+
+  <!-- Activación de clase + historia -->
+  <section>
+    <h2>⚡ Activación: El día que el código se negó a morir</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center;">
+      <div style="flex: 2;">
+        <p>Imagina que eres Mateo, un estudiante de bachillerato en Quito. Has creado una pequeña app para organizar horarios en tu barrio. De repente, el framework que usaste queda obsoleto en solo 6 meses. Todo tu proyecto parece derrumbarse… pero un amigo te dice: “No importa la herramienta, tú aprendiste a aprender”. Esa noche, Mateo decide estudiar los fundamentos y se da cuenta de que <strong>el verdadero poder no es saberlo todo, sino saber cómo aprender cualquier cosa</strong>. ¿Te suena familiar? Bienvenido al aprendizaje continuo.</p>
+      </div>
+      <div class="flex-img" style="flex:1;">
+        <img src="https://placehold.co/600x400/e63946/white?text=Código+en+Evolución" alt="Ilustración aprendizaje continuo" style="max-width: 100%; border-radius: 1rem;">
+      </div>
+    </div>
+  </section>
+
+  <!-- Contenido narrativo -->
+  <section>
+    <h2>📘 El arte de aprender mientras el mundo cambia</h2>
+    <p>Vivimos en una corriente imparable: nuevos lenguajes, frameworks que aparecen como estrellas fugaces, metodologías ágiles… <strong>El desarrollador del siglo XXI no es un repositorio de datos, sino un explorador.</strong> La única constante en tecnología es el cambio. Y aquí hay una verdad liberadora: no necesitas dominarlo todo, necesitas la capacidad de fluir con lo nuevo.</p>
+    <div class="card-grid">
+      <div class="card">🔥 <strong>Aprendizaje continuo</strong><br>Actualización permanente para no quedar atrás. Cada error es una semilla.</div>
+      <div class="card">🎓 <strong>Autoformación</strong><br>Gestionas tu ruta: cursos, documentación, comunidades y proyectos.</div>
+      <div class="card">⚙️ <strong>Adaptación tecnológica</strong><br>Desaprender y reaprender con curiosidad, salir de la zona de confort.</div>
+      <div class="card">🧭 <strong>Ética profesional</strong><br>Código con conciencia: proteger datos, honestidad, responsabilidad social.</div>
+    </div>
+    <div class="flex-img"><img src="https://placehold.co/900x300/1e3a8a/white?text=Aprender+es+tu+superpoder" alt="mapa mental aprendizaje"></div>
+  </section>
+
+  <!-- Desarrollo de la actividad (conceptos detallados) -->
+  <section>
+    <h2>🔍 Desarrollo: Hilos que tejen al profesional del futuro</h2>
+    <h3>📌 Aprendizaje continuo: más allá del aula</h3>
+    <p>El software se reinventa cada día. Python, IA, desarrollo web… Lo que hoy es tendencia, mañana será base. Por eso, un buen profesional practica con proyectos, lee documentación oficial, participa en foros y jamás deja de experimentar. Ejemplo: si sabes lógica, cualquier lenguaje nuevo lo aprendes en semanas. La clave: <strong>disciplina + curiosidad activa</strong>.</p>
+    <h3>📌 Autoformación: el docente eres tú</h3>
+    <p>¿Quieres aprender React? No esperes que alguien te guíe paso a paso. Define metas, elige un curso, construye una mini app, comparte tus dudas en comunidades. El ciclo virtuoso: Objetivo → Recursos → Practicar → Evaluar → Mejorar. Un aprendiz autónomo no teme equivocarse, documenta su progreso.</p>
+    <h3>📌 Adaptación: como el agua en el código</h3>
+    <p>Las empresas valoran más a alguien con fundamentos sólidos que sepa aprender rápido, que a un experto en una herramienta obsoleta. La estrategia: aprende algoritmos, patrones, y mantente al día con blogs, tutoriales, conferencias. <em>“No necesitas saber todas las tecnologías, necesitas saber cómo aprender cualquier tecnología”</em>.</p>
+    <h3>📌 Ética: el alma del software</h3>
+    <p>Un código malicioso o descuidado puede dañar vidas. Proteger datos, respetar licencias, reportar vulnerabilidades y no copiar sin atribución son actos que construyen confianza. La ética no es opcional: es el pilar de un ecosistema digital saludable.</p>
+  </section>
+
+  <!-- Desarrollo práctico + ejemplo con código y tarea -->
+  <section>
+    <h2>💻 Laboratorio del aprendiz: Ejemplo práctico</h2>
+    <p><strong>Contexto:</strong> Eres parte de un club de programación en Cuenca. Necesitas una función que decida si un estudiante debe reforzar su aprendizaje continuo según las horas semanales que dedica a practicar fuera de clases. La regla: si estudia más de 5 horas por semana, se considera "en ruta de crecimiento", si es menos, ¡requiere activar su plan de autoformación!</p>
+    <pre><code>// Función en JavaScript - ejemplo adaptación y lógica
+function evaluarAprendizaje(horasPractica, tieneCuriosidad) {
+  if (horasPractica >= 5 && tieneCuriosidad) {
+    return "🚀 Excelente, sigues en aprendizaje continuo activo.";
+  } else if (horasPractica >= 3) {
+    return "📈 Vas bien, pero necesitas aumentar la práctica constante.";
+  } else {
+    return "⏰ ¡Alerta! Activa tu plan de autoformación: establece metas, cursos y proyectos.";
+  }
+}
+
+// Prueba del código
+console.log(evaluarAprendizaje(6, true));   // aprendizaje activo
+console.log(evaluarAprendizaje(2, false));  // necesita plan
+</code></pre>
+    <button class="btn-code" id="runExampleBtn">▶️ Ejecutar ejemplo en consola</button>
+    <div id="consoleOutput" style="background:#e2e8f0; padding:0.8rem; border-radius:1rem; margin-top:1rem; font-family:monospace;"></div>
+    
+    <h3>🧩 Desafío práctico (Tarea integradora)</h3>
+    <p><strong>Misión: "Custodio del aprendizaje"</strong><br>
+    Construye una mini aplicación web (puede ser solo JS o HTML) que simule un <strong>diagnóstico personal de adaptación tecnológica y ética</strong>. Debe incluir:<br>
+    1. Una función que reciba el nivel de curiosidad (1-10), horas de autoformación semanal y si respeta licencias de código (booleano).<br>
+    2. Devuelva un mensaje personalizado que combine: recomendación de mejora continua + reflexión ética.<br>
+    3. Extras: Crea una pequeña interfaz con inputs y muestra el resultado dinámico.<br>
+    <strong>Objetivo:</strong> Reflexionar sobre tus hábitos y cómo la ética y adaptación van de la mano. Comparte tu código en clase o súbelo a un repositorio simulado.<br>
+    ¡La creatividad vale más que la perfección!
+    </p>
+  </section>
+
+  <!-- Evaluación lúdica: test interactivo -->
+  <section>
+    <h2>🎮 Pon a prueba tu mentalidad Tech · Juego interactivo</h2>
+    <div class="quiz-container" id="quizContainer">
+      <div class="quiz-question" id="questionText">Cargando preguntas...</div>
+      <div class="quiz-options" id="optionsContainer"></div>
+      <div class="feedback" id="feedbackMsg"></div>
+      <div class="quiz-footer">
+        <div class="score" id="scoreDisplay">🏆 Puntaje: 0</div>
+        <button class="next-btn" id="nextBtn">Siguiente pregunta →</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Diseñado por: Edwin Méndez J. · Inspirado en el aprendizaje basado en competencias, DUA y resiliencia tecnológica.
+  </footer>
+</div>
+
+<script>
+  // ---------- EJEMPLO CONSOLA ----------
+  const runBtn = document.getElementById('runExampleBtn');
+  const consoleOut = document.getElementById('consoleOutput');
+  function evaluarAprendizaje(horasPractica, tieneCuriosidad) {
+    if (horasPractica >= 5 && tieneCuriosidad) {
+      return "🚀 Excelente, sigues en aprendizaje continuo activo.";
+    } else if (horasPractica >= 3) {
+      return "📈 Vas bien, pero necesitas aumentar la práctica constante.";
+    } else {
+      return "⏰ ¡Alerta! Activa tu plan de autoformación: establece metas, cursos y proyectos.";
+    }
+  }
+  runBtn.addEventListener('click', () => {
+    const test1 = evaluarAprendizaje(6, true);
+    const test2 = evaluarAprendizaje(2, false);
+    const test3 = evaluarAprendizaje(4, true);
+    consoleOut.innerHTML = `🔹 Resultado (6h, curioso): ${test1}<br>🔸 Resultado (2h, no curioso): ${test2}<br>🔹 Resultado (4h, curioso): ${test3}<br>✨ Reflexión: La práctica constante + curiosidad te hacen imparable.`;
+  });
+
+  // ---------- TEST LÚDICO (5 preguntas sobre aprendizaje continuo, autoformación, adaptación, ética) ----------
+  const questions = [
+    {
+      text: "¿Cuál es la razón principal por la que el aprendizaje continuo es esencial en desarrollo de software?",
+      options: ["Porque los lenguajes nunca cambian", "Porque las tecnologías evolucionan rápidamente y el conocimiento se actualiza", "Porque solo se necesita un título universitario", "Porque es obligatorio legalmente"],
+      correct: 1
+    },
+    {
+      text: "¿Qué característica define a un aprendiz autónomo?",
+      options: ["Esperar siempre que el docente indique cada paso", "Curiosidad, disciplina y autogestión del tiempo", "Estudiar solamente con videos sin practicar", "Evitar comunidades y foros"],
+      correct: 1
+    },
+    {
+      text: "Un desarrollador adaptable frente a una nueva tecnología…",
+      options: ["Se niega a cambiar porque domina la anterior", "Aprende fundamentos sólidos y experimenta con proyectos pequeños", "Espera a que la tecnología desaparezca", "Solo lee artículos pero nunca practica"],
+      correct: 1
+    },
+    {
+      text: "¿Cuál es una conducta ética fundamental al desarrollar software?",
+      options: ["Copiar código sin atribución para ahorrar tiempo", "Ocultar errores críticos para no quedar mal", "Proteger los datos de los usuarios y reportar vulnerabilidades", "Desarrollar software malicioso para probar sistemas"],
+      correct: 2
+    },
+    {
+      text: "Según el documento, ¿qué frase resume la actitud ante el cambio tecnológico?",
+      options: ["Necesitas saber todas las tecnologías del mercado", "No necesitas saber todas las tecnologías, pero sí saber cómo aprender cualquier tecnología", "Solo enfócate en un lenguaje toda la vida", "La tecnología nunca cambia, todo es igual"],
+      correct: 1
+    }
+  ];
+
+  let currentIndex = 0;
+  let score = 0;
+  let answered = false;
+  let selectedOptionIdx = null;
+  let quizLock = false;
+
+  const questionText = document.getElementById('questionText');
+  const optionsContainer = document.getElementById('optionsContainer');
+  const feedbackMsg = document.getElementById('feedbackMsg');
+  const nextBtn = document.getElementById('nextBtn');
+  const scoreDisplay = document.getElementById('scoreDisplay');
+
+  function renderQuestion() {
+    answered = false;
+    selectedOptionIdx = null;
+    quizLock = false;
+    feedbackMsg.innerHTML = '';
+    nextBtn.disabled = true;
+    const q = questions[currentIndex];
+    questionText.textContent = `${currentIndex+1}. ${q.text}`;
+    optionsContainer.innerHTML = '';
+    q.options.forEach((opt, idx) => {
+      const optDiv = document.createElement('div');
+      optDiv.classList.add('quiz-option');
+      optDiv.textContent = opt;
+      optDiv.dataset.idx = idx;
+      optDiv.addEventListener('click', () => handleAnswer(idx, optDiv));
+      optionsContainer.appendChild(optDiv);
+    });
+  }
+
+  function handleAnswer(selectedIdx, element) {
+    if (answered || quizLock) return;
+    answered = true;
+    quizLock = true;
+    const currentQ = questions[currentIndex];
+    const isCorrect = (selectedIdx === currentQ.correct);
+    if (isCorrect) {
+      score++;
+      feedbackMsg.innerHTML = '<span class="correct-feedback">✅ ¡Correcto! Muy bien, estás forjando tu mentalidad de aprendizaje continuo.</span>';
+      scoreDisplay.textContent = `🏆 Puntaje: ${score}`;
+    } else {
+      const correctAnswerText = currentQ.options[currentQ.correct];
+      feedbackMsg.innerHTML = `<span class="incorrect-feedback">❌ Incorrecto. La respuesta correcta es: "${correctAnswerText}". Reflexiona: cada error te acerca al dominio.</span>`;
+    }
+    // deshabilitar estilos visuales de todas las opciones
+    const allOptions = document.querySelectorAll('.quiz-option');
+    allOptions.forEach(opt => opt.style.pointerEvents = 'none');
+    // resaltar la correcta
+    allOptions.forEach((opt, i) => {
+      if (i === currentQ.correct) {
+        opt.style.backgroundColor = '#c7f9cc';
+        opt.style.border = '2px solid #2b9348';
+      }
+      if (i === selectedIdx && selectedIdx !== currentQ.correct) {
+        opt.style.backgroundColor = '#ffe0e0';
+        opt.style.border = '2px solid #e63946';
+      }
+    });
+    nextBtn.disabled = false;
+  }
+
+  function nextQuestion() {
+    if (!answered && currentIndex !== questions.length) {
+      feedbackMsg.innerHTML = '🔔 Por favor selecciona una respuesta antes de continuar.';
+      return;
+    }
+    if (currentIndex + 1 < questions.length) {
+      currentIndex++;
+      renderQuestion();
+    } else {
+      // fin del test
+      const finalMessage = (score === 5) ? "🌟 ¡Experto en aprendizaje continuo! Eres un faro de adaptación y ética." : (score >= 3 ? "📚 Buen trabajo, sigue cultivando tu curiosidad y autoformación." : "🌱 El aprendizaje es un viaje. Revisa los conceptos, cada día es una oportunidad.");
+      feedbackMsg.innerHTML = `<span style="font-weight:bold;">🎉 Juego completado. Puntaje final: ${score}/5. ${finalMessage}</span>`;
+      nextBtn.disabled = true;
+      nextBtn.textContent = 'Completado ✅';
+      // deshabilitar opciones y marcar final
+      optionsContainer.innerHTML = `<div style="text-align:center; padding:1rem;">✨ Has reflexionado sobre aprendizaje continuo, adaptación y ética. ¡Aplica estas ideas!</div>`;
+      questionText.textContent = '🎯 Evaluación finalizada';
+      nextBtn.style.opacity = '0.6';
+    }
+  }
+
+  nextBtn.addEventListener('click', nextQuestion);
+  renderQuestion();
+
+  // pequeños ajustes adicionales
+  function updateScoreUI() {
+    scoreDisplay.textContent = `🏆 Puntaje: ${score}`;
+  }
+  // hook al sumar puntos
+  const originalScoreAdd = () => {};
+  window.updateScoreUI = updateScoreUI;
+</script>
+</body>
+</html>
