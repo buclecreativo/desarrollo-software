@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Bucle Creativo | Arquitectura de Software: construye lo imparable</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(145deg, #f8faff 0%, #eef2ff 100%);
+            color: #0a1c2f;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        /* Paleta: rojo + azul vibrante + acentos */
+        :root {
+            --blue-deep: #0f2b3d;
+            --blue-primary: #1e5af7;
+            --blue-light: #eef3ff;
+            --red-energetic: #e63e2e;
+            --red-soft: #ffefed;
+            --gold-accent: #f9b81b;
+            --gray-cool: #f1f4fa;
+            --shadow-sm: 0 20px 35px -12px rgba(0, 0, 0, 0.08);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* header con estilo bucle creativo */
+        .hero {
+            background: linear-gradient(135deg, var(--blue-deep) 0%, #0a1e2e 100%);
+            border-radius: 2rem;
+            padding: 2rem 2rem 2.2rem;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "🧬";
+            font-size: 180px;
+            opacity: 0.05;
+            position: absolute;
+            bottom: -30px;
+            right: 10px;
+            pointer-events: none;
+        }
+
+        .badge-loop {
+            display: inline-block;
+            background: rgba(255,255,240,0.15);
+            backdrop-filter: blur(4px);
+            border-radius: 40px;
+            padding: 0.4rem 1.2rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            color: #f0f3ff;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            line-height: 1.2;
+            background: linear-gradient(120deg, #ffffff, #b8d0ff);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .hero-sub {
+            font-size: 1.1rem;
+            color: #cbdffc;
+            max-width: 85%;
+            border-left: 3px solid var(--red-energetic);
+            padding-left: 1.2rem;
+            margin: 1rem 0 0.8rem;
+        }
+
+        .footer-note {
+            background: var(--blue-deep);
+            color: #bfd9ff;
+            border-radius: 2rem;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3.5rem;
+            font-weight: 500;
+        }
+
+        /* cards y organización */
+        .card {
+            background: white;
+            border-radius: 1.8rem;
+            padding: 1.8rem 2rem;
+            margin-bottom: 2.5rem;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.2s ease;
+            border: 1px solid #eef2ff;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+        }
+
+        h2 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(125deg, var(--blue-primary), var(--red-energetic));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 1.2rem 0 0.8rem;
+            color: var(--blue-deep);
+        }
+
+        .grid-principios {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .pill {
+            background: var(--blue-light);
+            border-radius: 60px;
+            padding: 0.4rem 1rem;
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: var(--blue-primary);
+        }
+
+        .ejemplo-codigo {
+            background: #0e1e2a;
+            color: #e2f0fa;
+            padding: 1.3rem;
+            border-radius: 1.5rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 1.2rem 0;
+        }
+
+        button, .test-btn {
+            background: var(--blue-primary);
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 0.7rem 1.6rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        button:hover {
+            background: #0b44c0;
+            transform: scale(0.98);
+        }
+
+        .quiz-container {
+            background: var(--gray-cool);
+            border-radius: 2rem;
+            padding: 1.8rem;
+            margin-top: 1rem;
+        }
+
+        .question-text {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+        }
+
+        .option {
+            background: white;
+            border-radius: 1.2rem;
+            padding: 0.8rem 1.2rem;
+            margin: 0.8rem 0;
+            cursor: pointer;
+            transition: all 0.1s;
+            border: 1px solid #dfe6f0;
+        }
+
+        .option:hover {
+            background: #eaf2ff;
+            border-color: var(--blue-primary);
+        }
+
+        .feedback {
+            margin: 1rem 0;
+            font-weight: 500;
+        }
+
+        .score {
+            font-size: 1.2rem;
+            background: var(--blue-deep);
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            color: white;
+        }
+
+        img.mockup-img {
+            max-width: 100%;
+            border-radius: 1.2rem;
+            margin: 1rem 0;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border: 1px solid #f0f0ff;
+        }
+
+        .row-flex {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.8rem;
+            align-items: center;
+        }
+
+        .col-text {
+            flex: 2;
+        }
+
+        .col-img {
+            flex: 1;
+            min-width: 160px;
+        }
+
+        @media (max-width: 720px) {
+            h1 { font-size: 2rem; }
+            .container { padding: 1rem; }
+            .card { padding: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <div class="badge-loop">🧠 ∘ bucle creativo ∘ 🔁</div>
+        <h1>Arquitectura de Software:<br>Diseña estructuras que desafían el caos</h1>
+        <div class="hero-sub">Taller diseñado con el corazón de un docente y la mente de un programador.</div>
+        <div style="margin-top: 1.2rem; font-size:0.85rem; color:#b9d0ff;">✨ Construir software sin arquitectura es como improvisar un rascacielos sobre arena movediza.</div>
+    </div>
+
+    <!-- Objetivo y competencia -->
+    <div class="card">
+        <h2>🎯 Horizonte de aprendizaje</h2>
+        <p style="font-size:1.08rem; margin-top:0.5rem;"><strong>Objetivo:</strong> Analizar y aplicar los fundamentos de la arquitectura de software, patrones arquitectónicos y principios SOLID, diseñando soluciones técnicas escalables y mantenibles, para desarrollar un pensamiento sistémico que permita enfrentar problemas del mundo real con creatividad, resiliencia y responsabilidad técnica.</p>
+        <div style="background: #eef3ff; border-radius: 2rem; padding: 1rem; margin-top: 1.2rem;">
+            <strong>🛠️ Competencia a alcanzar:</strong> El estudiante será capaz de diseñar una estructura básica de software aplicando patrones (cliente-servidor, capas o microservicios), principios SOLID y criterios de escalabilidad, justificando decisiones técnicas en escenarios simulados, demostrando pensamiento crítico y colaboración.
+        </div>
+    </div>
+
+    <!-- Activación de la clase: historia e imagen -->
+    <div class="card">
+        <div class="row-flex">
+            <div class="col-text">
+                <h2>🔥 Activación: El colapso silencioso</h2>
+                <p>Imagina que eres parte de "EduTec", una startup ecuatoriana que desarrolla una plataforma para gestionar 50 colegios. Todo funciona perfecto con 2000 usuarios… hasta que, de repente, matrículas online explotan: 25.000 estudiantes intentan ingresar. El sistema se congela, las notas se pierden y reina el caos.</p>
+                <p><strong>¿Qué falló?</strong> No fue el código bonito, sino la <strong>arquitectura</strong>. No estaba diseñada para crecer ni para ser mantenible. ¿Quieres aprender a construir sistemas resilientes? Entonces comienza el viaje.</p>
+            </div>
+            <div class="col-img">
+                <svg viewBox="0 0 200 140" style="width:100%; background:#f0eef9; border-radius:1rem; padding: 10px;">
+                    <rect width="200" height="140" fill="#eef2ff" rx="12" />
+                    <text x="20" y="30" font-size="9" fill="#1e5af7">📉 usuarios</text>
+                    <rect x="30" y="70" width="120" height="12" fill="#e63e2e" rx="6" />
+                    <text x="40" y="68" fill="#0f2b3d" font-size="8">servidor colapsa</text>
+                    <circle cx="160" cy="90" r="14" fill="#ffd966" />
+                    <text x="154" y="95" font-size="12">⚠️</text>
+                </svg>
+                <p class="pill" style="margin-top:8px;">Caso real: error 500 masivo</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTENIDO: narrativa envolvente -->
+    <div class="card">
+        <h2>📡 ¿Qué es la arquitectura de software? (más que planos)</h2>
+        <p>Piensa en construir tu casa soñada: la <strong>arquitectura</strong> define dónde estará la cocina, cómo se conectan los ambientes, los materiales resistentes. En software es igual: define <strong>componentes, conectores y estilo</strong>. Una buena arquitectura permite que tu app aguante miles de usuarios, sea fácil de modificar y se mantenga segura.</p>
+        <div class="row-flex" style="margin:1rem 0;">
+            <div class="col-text"><strong>🔧 Componentes:</strong> módulo usuarios, pagos.<br>
+            <strong>📡 Conectores:</strong> APIs, web services.<br>
+            <strong>🎨 Patrón:</strong> Cliente-servidor, capas o microservicios.<br>
+            Sin arquitectura = sistema frágil y difícil de entender.</div>
+            <div class="col-img"><span class="pill">🎯 Ejemplo cotidiano: app de delivery conecta restaurante, repartidor, cliente.</span></div>
+        </div>
+        <img class="mockup-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 160'%3E%3Crect width='600' height='160' fill='%23dfe9ff' rx='20'/%3E%3Ctext x='40' y='40' fill='%231e5af7' font-size='14'%3ECliente (frontend)%3C/text%3E%3Ctext x='240' y='40' fill='%23e63e2e' font-size='14'%3E↔ API REST %3C/text%3E%3Ctext x='400' y='40' fill='%231e5af7'%3EServidor (backend)%3C/text%3E%3Ctext x='420' y='110' fill='%230f2b3d'%3EBase de Datos%3C/text%3E%3C/svg%3E" alt="diagrama cliente servidor">
+        <p><strong>✨ Patrón estrella: Cliente-Servidor, Capas y Microservicios</strong> — los héroes silenciosos de Spotify, Netflix o un sistema escolar.</p>
+    </div>
+
+    <!-- DESARROLLO DE LA ACTIVIDAD: explicación detallada + principios SOLID -->
+    <div class="card">
+        <h2>🧩 Patrones arquitectónicos y principios SOLID</h2>
+        <p>Los <strong>patrones</strong> son plantillas probadas: cliente-servidor (navegador y servidor web), arquitectura en capas (presentación, lógica, datos) y microservicios (pequeños servicios autónomos).<br>
+        <strong>SOLID</strong>: cinco principios para código limpio y resiliente. </p>
+        <div class="grid-principios">
+            <span class="pill">S: Responsabilidad única</span>
+            <span class="pill">O: Abierto/Cerrado</span>
+            <span class="pill">L: Sustitución de Liskov</span>
+            <span class="pill">I: Segregación de interfaces</span>
+            <span class="pill">D: Inversión de dependencias</span>
+        </div>
+        <p>Sin SOLID, una clase de "usuario" también envía emails, imprime reportes y valida pagos → caos. Con SOLID, cada actor hace una sola tarea, extensible y fácil de probar.</p>
+        <div class="ejemplo-codigo">
+            // ❌ Sin SRP: clase TodoPoderosa<br>
+            class GestorUsuarios {<br>
+              &nbsp;&nbsp;crearUsuario(){} <br>
+              &nbsp;&nbsp;enviarEmail(){} <br>
+              &nbsp;&nbsp;generarReporte(){} <br>
+            }<br><br>
+            // ✅ Con SRP + DIP (inversión)<br>
+            interface Notificador { enviar(); }<br>
+            class EmailNotificador implements Notificador {}<br>
+            class GestorUsuarios { constructor(notificador) {} }
+        </div>
+        <p><strong>Escalabilidad y mantenibilidad:</strong> crecer sin miedo. Escalar vertical (mejor servidor) u horizontal (muchos servidores). Mantenibilidad = código claro, bajo acoplamiento y documentación. </p>
+    </div>
+
+    <!-- DESARROLLO PRÁCTICO: ejemplo contextualizado y tarea creativa -->
+    <div class="card">
+        <h2>💻 Manos al teclado: Diseña tu primer microsistema</h2>
+        <p><strong>Contexto ecuatoriano:</strong> Imagina que construyes una app para gestionar ferias de emprendimiento "Juventud Emprende". Necesitas un módulo de usuarios, catálogo de productos y sistema de pagos simbólicos.</p>
+        <div class="ejemplo-codigo">
+            // Simulación de una mini-arquitectura con capas y responsabilidad única<br><br>
+            // Capa de presentación (simulada)<br>
+            class VistaCatalogo {<br>
+              &nbsp;&nbsp;mostrar(productos) { console.table(productos); }<br>
+            }<br>
+            // Capa de lógica de negocio<br>
+            class LogicaProductos {<br>
+              &nbsp;&nbsp;constructor(repositorio) { this.repositorio = repositorio; }<br>
+              &nbsp;&nbsp;obtenerActivos() { return this.repositorio.filtrar(p => p.activo); }<br>
+            }<br>
+            // Capa de acceso a datos<br>
+            class RepositorioMemoria {<br>
+              &nbsp;&nbsp;filtrar(fn) { return datos.filter(fn); }<br>
+            }<br>
+            const datos = [{id:1, nombre:'Artesanía', activo:true}];<br>
+            const repo = new RepositorioMemoria();<br>
+            const logica = new LogicaProductos(repo);<br>
+            const vista = new VistaCatalogo();<br>
+            vista.mostrar(logica.obtenerActivos()); // ✨ muestra productos activos<br>
+        </div>
+        <p><strong>🎯 Tarea - Desafío Estructural:</strong><br>
+        Construye (en papel o pseudocódigo / diagrama) la arquitectura de una plataforma educativa que permita: registro de estudiantes, asignación de tareas, y generación automática de reportes. Debes:<br>
+        1. Elegir un patrón arquitectónico (capas, microservicios o cliente-servidor) y justificarlo.<br>
+        2. Identificar 3 componentes y sus conectores.<br>
+        3. Aplicar al menos 2 principios SOLID en una clase concreta (explicar cómo).<br>
+        4. Reflexionar: ¿cómo garantizarías escalabilidad horizontal si crece a 100.000 estudiantes?<br>
+        ✨ Sube tu solución a un repositorio simbólico y comparte con tu comunidad de aprendizaje.</p>
+    </div>
+
+    <!-- EVALUACIÓN LÚDICA: TEST INTERACTIVO 5 preguntas -->
+    <div class="card" id="quiz-section">
+        <h2>🎮 Verifica tu poder: Desafío Arquitectónico</h2>
+        <p>Responde las 5 preguntas, cada acierto suma 1 punto. ¡Construye tu legado técnico!</p>
+        <div class="quiz-container" id="quizContainer">
+            <div id="quizContent"></div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                <span id="scoreDisplay" class="score">Puntaje: 0</span>
+                <button id="nextBtn" style="background: #0f2b3d;">➡ Siguiente pregunta</button>
+            </div>
+        </div>
+    </div>
+    <div class="footer-note">
+        Diseñado por: Edwin Méndez J. — Cada línea de código es una oportunidad para construir futuro. 🌱
+    </div>
+</div>
+
+<script>
+    // PREGUNTAS TEST INTERACTIVO (5)
+    const questions = [
+        {
+            text: "¿Cuál de las siguientes opciones describe MEJOR la arquitectura de software?",
+            options: [
+                "El proceso de escribir código rápidamente sin planificar.",
+                "La estructura fundamental del sistema, organización de componentes e interacciones.",
+                "Solo la interfaz gráfica que ve el usuario.",
+                "La base de datos donde se guarda la información."
+            ],
+            correct: 1
+        },
+        {
+            text: "Según el documento, ¿cuál es una VENTAJA de la arquitectura en capas?",
+            options: [
+                "Es la más rápida en ejecución.",
+                "No necesita mantenimiento.",
+                "Separación de responsabilidades y fácil mantenimiento.",
+                "Todas las capas se ejecutan en una sola máquina."
+            ],
+            correct: 2
+        },
+        {
+            text: "El principio SOLID que indica: 'Una clase debe tener una sola razón para cambiar' es:",
+            options: [
+                "Open/Closed Principle",
+                "Liskov Substitution",
+                "Interface Segregation",
+                "Single Responsibility Principle"
+            ],
+            correct: 3
+        },
+        {
+            text: "Para soportar un crecimiento masivo de usuarios sin perder rendimiento, lo más recomendado es:",
+            options: [
+                "Escalabilidad vertical (mejorar una máquina)",
+                "Escalabilidad horizontal (añadir más servidores)",
+                "Reescribir todo el código desde cero",
+                "Aumentar el número de imágenes en la interfaz"
+            ],
+            correct: 1
+        },
+        {
+            text: "¿Cuál de los siguientes es un patrón arquitectónico que divide el sistema en servicios pequeños e independientes?",
+            options: [
+                "Cliente-Servidor",
+                "Arquitectura en capas",
+                "Microservicios",
+                "Monolito puro"
+            ],
+            correct: 2
+        }
+    ];
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let quizAnswered = false;
+    let selectedOptionIndex = null;
+
+    const quizContentDiv = document.getElementById("quizContent");
+    const scoreSpan = document.getElementById("scoreDisplay");
+    const nextBtn = document.getElementById("nextBtn");
+
+    function renderQuestion() {
+        if (!quizContentDiv) return;
+        const q = questions[currentQuestionIndex];
+        if (!q) return;
+
+        let html = `<div class="question-text">📌 ${currentQuestionIndex+1}. ${q.text}</div>`;
+        q.options.forEach((opt, idx) => {
+            let additionalClass = "";
+            let icon = "";
+            if (quizAnswered && selectedOptionIndex === idx) {
+                const isCorrect = (idx === q.correct);
+                if (isCorrect) {
+                    additionalClass = "style='background:#d4f0d4; border-left:6px solid #2b8c2b;'";
+                    icon = "✅ ";
+                } else {
+                    additionalClass = "style='background:#ffe0e0; border-left:6px solid #e63e2e;'";
+                    icon = "❌ ";
+                }
+            } else if (quizAnswered && idx === q.correct) {
+                // resaltar la correcta si el usuario falló
+                additionalClass = "style='background:#e0ffe0; border-left:6px solid #2b8c2b;'";
+                icon = "✔️ ";
+            }
+            const disabledAttr = quizAnswered ? "disabled" : "";
+            html += `<div class="option" data-opt-index="${idx}" ${disabledAttr} ${additionalClass}>${icon}${opt}</div>`;
+        });
+
+        if (quizAnswered) {
+            const isAnswerCorrect = (selectedOptionIndex === q.correct);
+            const feedbackMsg = isAnswerCorrect ? "🎉 ¡Respuesta correcta! +1 punto. Sigue construyendo." : `😓 Incorrecto. La respuesta correcta era: "${q.options[q.correct]}". Revisa la arquitectura.`;
+            html += `<div class="feedback" style="margin-top:1rem; padding:0.7rem; background:${isAnswerCorrect ? '#daf1e4' : '#ffe0e0'}; border-radius:1rem;">${feedbackMsg}</div>`;
+        } else {
+            html += `<div class="feedback" style="margin-top:0.5rem; opacity:0.7;">🔍 Selecciona una opción para validar tu conocimiento.</div>`;
+        }
+
+        quizContentDiv.innerHTML = html;
+
+        // add event listeners a opciones no deshabilitadas
+        if (!quizAnswered) {
+            const opts = document.querySelectorAll('.option');
+            opts.forEach(opt => {
+                opt.addEventListener('click', (e) => {
+                    if (quizAnswered) return;
+                    const idx = parseInt(opt.getAttribute('data-opt-index'));
+                    if (isNaN(idx)) return;
+                    selectedOptionIndex = idx;
+                    quizAnswered = true;
+                    // verificar
+                    if (idx === questions[currentQuestionIndex].correct) {
+                        score++;
+                        scoreSpan.innerText = `Puntaje: ${score}`;
+                    }
+                    renderQuestion(); // re-render con feedback
+                });
+            });
+        }
+    }
+
+    function nextQuestion() {
+        if (!quizAnswered && currentQuestionIndex < questions.length) {
+            // Si aún no respondió, mostrar alerta amigable
+            alert("⚡ Antes de continuar, responde la pregunta actual. ¡Cada intento te acerca a dominar la arquitectura!");
+            return;
+        }
+        if (currentQuestionIndex + 1 < questions.length) {
+            currentQuestionIndex++;
+            quizAnswered = false;
+            selectedOptionIndex = null;
+            renderQuestion();
+        } else {
+            // fin del test
+            if (currentQuestionIndex === questions.length-1 && quizAnswered) {
+                let finalMsg = `🏆 Has completado el desafío. Puntaje final: ${score}/${questions.length}. `;
+                if (score === questions.length) finalMsg += "¡Excelente! Posees visión de arquitecto. 🚀";
+                else if (score >= 3) finalMsg += "Buen trabajo, repasa los patrones para ser imparable.";
+                else finalMsg += "Vuelve a leer los conceptos, ¡cada error es una lección poderosa!";
+                alert(finalMsg);
+                // Opcional reset pero dejamos igual para reiniciar manual si quiere? Podemos reset pero mejor mostrar reinicio
+                // Agregar botón implícito: se puede resetear la página, pero dejamos elegante.
+                // añadimos un reinicio visual si se desea.
+                if(confirm("¿Quieres reiniciar el test para seguir practicando?")) {
+                    currentQuestionIndex = 0;
+                    score = 0;
+                    quizAnswered = false;
+                    selectedOptionIndex = null;
+                    scoreSpan.innerText = "Puntaje: 0";
+                    renderQuestion();
+                }
+                return;
+            } else if(currentQuestionIndex === questions.length-1 && !quizAnswered){
+                alert("Responde la última pregunta antes de finalizar.");
+                return;
+            }
+        }
+    }
+
+    nextBtn.addEventListener("click", nextQuestion);
+    renderQuestion();
+</script>
+</body>
+</html>
