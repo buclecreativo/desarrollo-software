@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bucle Creativo - Introducción al Desarrollo de Software</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --accent: #14b8a6;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--light);
+        }
+
+        /* Header */
+        .header {
+            background: var(--gradient-1);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            font-style: italic;
+        }
+
+        /* Navigation */
+        .nav-container {
+            background: white;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 2px 4px rgba(99, 102, 241, 0.3);
+        }
+
+        .nav-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Sections */
+        .section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--primary);
+        }
+
+        .card h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card h3 {
+            color: var(--secondary);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.3rem;
+        }
+
+        /* Objective Box */
+        .objective-box {
+            background: var(--gradient-3);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .objective-box h3 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        /* Competency Badge */
+        .competency-badge {
+            display: inline-block;
+            background: var(--gradient-2);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: bold;
+            margin: 1rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
+        /* Images */
+        .image-container {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            max-height: 400px;
+            object-fit: cover;
+        }
+
+        .image-caption {
+            margin-top: 0.5rem;
+            color: var(--gray);
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+
+        /* Lists */
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 0.75rem 0;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .feature-list li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Code Block */
+        .code-block {
+            background: var(--dark);
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            border-left: 4px solid var(--accent);
+        }
+
+        .code-block code {
+            color: #64ffda;
+        }
+
+        /* Interactive Elements */
+        .interactive-box {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            border: 2px dashed var(--dark);
+        }
+
+        .interactive-box h4 {
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+
+        /* Quiz Styles */
+        .quiz-container {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .question {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--light);
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .question h3 {
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .option {
+            padding: 1rem;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .option:hover {
+            border-color: var(--primary);
+            background: #f1f5f9;
+        }
+
+        .option.selected.correct {
+            background: #86efac;
+            border-color: #22c55e;
+            color: #15803d;
+        }
+
+        .option.selected.incorrect {
+            background: #fca5a5;
+            border-color: #ef4444;
+            color: #b91c1c;
+        }
+
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            display: none;
+            font-weight: 600;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct {
+            background: #86efac;
+            color: #15803d;
+        }
+
+        .feedback.incorrect {
+            background: #fca5a5;
+            color: #b91c1c;
+        }
+
+        .next-btn, .start-quiz-btn {
+            background: var(--gradient-1);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+
+        .next-btn:hover, .start-quiz-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+
+        .score-display {
+            text-align: center;
+            font-size: 1.5rem;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: var(--gradient-1);
+            color: white;
+            border-radius: 15px;
+        }
+
+        /* Challenge Box */
+        .challenge-box {
+            background: var(--gradient-2);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .challenge-box h3 {
+            color: white;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .footer p {
+            opacity: 0.9;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .card {
+                padding: 1.5rem;
+            }
+            
+            .nav-buttons {
+                gap: 0.5rem;
+            }
+            
+            .nav-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Highlight boxes */
+        .highlight-box {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            border-left: 4px solid var(--accent);
+        }
+
+        .reflection-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            font-style: italic;
+            border-left: 4px solid var(--secondary);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>🎨 Bucle Creativo</h1>
+        <p>Taller diseñado con el corazón de un docente y la mente de un programador.</p>
+        <p>DISEÑO DE SOFTWARE</p>
+    </header>
+
+    <nav class="nav-container">
+        <div class="nav-buttons">
+            <button class="nav-btn" onclick="showSection('inicio')">🚀 Inicio</button>
+            <button class="nav-btn" onclick="showSection('contenido')">📚 Contenido</button>
+            <button class="nav-btn" onclick="showSection('actividad')">💻 Actividad</button>
+            <button class="nav-btn" onclick="showSection('practica')">🔧 Práctica</button>
+            <button class="nav-btn" onclick="showSection('evaluacion')">🎮 Evaluación</button>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- SECCIÓN INICIO -->
+        <section id="inicio" class="section active">
+            <div class="card">
+                <h2>🎯 Objetivo de Aprendizaje</h2>
+                <div class="objective-box">
+                    <h3>¿Qué lograrás hoy?</h3>
+                    <p>
+                        Comprender y aplicar los fundamentos del desarrollo de software mediante la exploración de sus 
+                        componentes esenciales, tipos y funciones, desarrollando habilidades técnicas para identificar 
+                        las características del código, datos y documentación; fortaleciendo el pensamiento lógico y 
+                        crítico al analizar cómo el software transforma problemas reales en soluciones tecnológicas; 
+                        y cultivando una actitud ética, colaborativa y resiliente que te permita reconocer el impacto 
+                        social del software en tu comunidad ecuatoriana, preparándote para participar activamente en 
+                        la construcción de un futuro digital más inclusivo y sostenible.
+                    </p>
+                </div>
+
+                <div class="competency-badge">
+                    🏆 Competencia: Diseñas soluciones de software básicas aplicando conceptos fundamentales 
+                    con responsabilidad ética y creatividad
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>🌟 Activación: Tu Primer Encuentro con el Software</h2>
+                
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800" alt="Estudiante programando">
+                    <p class="image-caption">Cada línea de código es una oportunidad para cambiar el mundo</p>
+                </div>
+
+                <div class="highlight-box">
+                    <h3>📖 La Historia de María</h3>
+                    <p>
+                        Imagina a María, una estudiante de bachillerato de Guayaquil. Cada mañana, antes de salir 
+                        a clase, revisa su teléfono: usa WhatsApp para hablar con sus amigos, Instagram para ver 
+                        fotos, y una app del banco que su papá instaló para pagar servicios. En el colegio, usa 
+                        Google Classroom para entregar tareas y YouTube para entender matemáticas. Al regresar a 
+                        casa, juega videojuegos y ve series en Netflix.
+                    </p>
+                    <p style="margin-top: 1rem;">
+                        <strong>¿Alguna vez te has preguntado qué hay detrás de todas estas aplicaciones?</strong> 
+                        María tampoco lo sabía... hasta hoy.
+                    </p>
+                </div>
+
+                <div class="reflection-box">
+                    <p>
+                        "El software no es solo código: es la mente que da vida a las máquinas, 
+                        la herramienta que transforma sueños en realidad digital."
+                    </p>
+                </div>
+
+                <p style="margin-top: 1.5rem; font-size: 1.1rem;">
+                    Hoy descubrirás que <strong>tú también puedes ser creador</strong>, no solo usuario. 
+                    Que detrás de cada app, cada juego, cada sistema que usas, hay personas como tú 
+                    que decidieron aprender, experimentar y crear.
+                </p>
+            </div>
+        </section>
+
+        <!-- SECCIÓN CONTENIDO -->
+        <section id="contenido" class="section">
+            <div class="card">
+                <h2>📖 Contenido: El Universo del Software</h2>
+                
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800" alt="Código de programación">
+                    <p class="image-caption">El software es el lenguaje que habla con el hardware</p>
+                </div>
+
+                <h3> ¿Qué es el Software?</h3>
+                <p style="margin-bottom: 1rem;">
+                    Imagina una computadora como un cuerpo humano. El <strong>hardware</strong> sería el cuerpo 
+                    físico: los órganos, los músculos, los huesos. Pero un cuerpo sin mente no puede hacer nada. 
+                    Ahí entra el <strong>software</strong>: es la mente, el alma, las instrucciones que le dicen 
+                    al cuerpo qué hacer y cómo hacerlo.
+                </p>
+
+                <div class="highlight-box">
+                    <h4>Sin software, el hardware es completamente inerte.</h4>
+                </div>
+
+                <p>
+                    El software es <strong>intangible</strong> (no lo puedes tocar), pero está en todas partes: 
+                    en tu celular, en los semáforos, en los cajeros automáticos, en los sistemas del hospital 
+                    donde naciste. Es el elemento lógico que da funcionalidad a todo sistema informático.
+                </p>
+
+                <h3>🧩 Elementos que Componen el Software</h3>
+                <p>El software no es solo código. Es como una orquesta donde cada instrumento es esencial:</p>
+                
+                <ul class="feature-list">
+                    <li><strong>Código fuente:</strong> Las instrucciones escritas en un lenguaje de programación 
+                    (como Python, Java o JavaScript). Es la partitura que los músicos siguen.</li>
+                    
+                    <li><strong>Datos:</strong> La información que el programa procesa. Sin datos, el código 
+                    no tiene nada que transformar.</li>
+                    
+                    <li><strong>Documentación:</strong> Manuales técnicos y de usuario. Es como el mapa que 
+                    ayuda a otros a entender cómo funciona todo.</li>
+                    
+                    <li><strong>Configuraciones:</strong> Parámetros que permiten adaptar el software a distintos 
+                    entornos. Como ajustar el asiento del carro para que te quede cómodo.</li>
+                </ul>
+
+                <h3>🎭 Los Tres Grandes Tipos de Software</h3>
+                
+                <div class="interactive-box">
+                    <h4>🏢 Piensa en una organización:</h4>
+                    <ul class="feature-list">
+                        <li><strong>Software de Sistema</strong> = La infraestructura (cimientos, electricidad, agua)</li>
+                        <li><strong>Software de Desarrollo</strong> = Los ingenieros que construyen</li>
+                        <li><strong>Software de Aplicación</strong> = El servicio que recibe el usuario final</li>
+                    </ul>
+                </div>
+
+                <h4>1️⃣ Software de Sistema</h4>
+                <p>
+                    Es el administrador, el jefe que controla todo el hardware. Sin él, nada funcionaría. 
+                    Su trabajo es gestionar recursos (CPU, memoria, disco), controlar dispositivos y proporcionar 
+                    una interfaz entre tú y la máquina.
+                </p>
+                <p><strong>Ejemplos:</strong> Windows, Linux, macOS, Android, los drivers de tu impresora.</p>
+
+                <h4>2️⃣ Software de Aplicación</h4>
+                <p>
+                    Son los programas que resuelven necesidades específicas. Cuando escribes un documento en Word, 
+                    navegas por Chrome, juegas en tu celular o usas Instagram, estás utilizando software de aplicación.
+                </p>
+                <p><strong>Ejemplos:</strong> Procesadores de texto, navegadores web, apps móviles, videojuegos.</p>
+
+                <h4>3️⃣ Software de Desarrollo</h4>
+                <p>
+                    Son las herramientas que usan los programadores para crear software. Es como el taller del 
+                    carpintero: necesita martillos, sierras y medidas para construir muebles.
+                </p>
+                <p><strong>Ejemplos:</strong> Python, Java, Visual Studio Code, compiladores.</p>
+
+                <h3>🌍 Importancia del Software en la Sociedad Actual</h3>
+                <p>El software ha dejado de ser solo una herramienta para convertirse en el motor de la transformación digital:</p>
+                
+                <ul class="feature-list">
+                    <li><strong>Automatiza</strong> actividades repetitivas y reduce errores humanos</li>
+                    <li><strong>Revoluciona</strong> la educación con plataformas virtuales y simuladores</li>
+                    <li><strong>Impulsa</strong> la economía creando nuevas profesiones y startups</li>
+                    <li><strong>Mejora</strong> la calidad de vida con comunicación instantánea y servicios digitales</li>
+                    <li><strong>Salva vidas</strong> en sectores críticos como salud, transporte y seguridad</li>
+                    <li><strong>Es la base</strong> de tecnologías emergentes: Inteligencia Artificial, IoT, Big Data</li>
+                </ul>
+
+                <div class="reflection-box">
+                    <p>
+                        "En la actualidad, quien entiende el software no solo usa tecnología, 
+                        sino que tiene la capacidad de crearla y transformarla."
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN ACTIVIDAD -->
+        <section id="actividad" class="section">
+            <div class="card">
+                <h2>💡 Desarrollo de la Actividad: Explorando el Mundo del Software</h2>
+                
+                <p style="margin-bottom: 1.5rem;">
+                    Ahora que conoces los conceptos fundamentales, vamos a profundizar con ejemplos prácticos 
+                    y situaciones que te invitarán a reflexionar sobre cómo el software impacta tu vida diaria 
+                    y la de tu comunidad en Ecuador.
+                </p>
+
+                <h3>🔬 Actividad 1: Detective del Software</h3>
+                <div class="highlight-box">
+                    <h4>🎯 Misión:</h4>
+                    <p>
+                        Durante las próximas 24 horas, convierte tu vida en un laboratorio de observación. 
+                        Cada vez que uses un dispositivo tecnológico, detente y pregúntate:
+                    </p>
+                    <ul class="feature-list" style="margin-top: 1rem;">
+                        <li>¿Qué tipo de software estoy usando?</li>
+                        <li>¿Qué problema me está resolviendo?</li>
+                        <li>¿Qué pasaría si ese software dejara de funcionar?</li>
+                    </ul>
+                </div>
+
+                <h4>Ejemplo práctico contextualizado:</h4>
+                <p>
+                    Imagina que vives en Quito y necesitas pagar la luz. Antes, tu mamá hacía fila en el banco 
+                    durante una hora. Hoy, usa la app del banco desde su celular en 3 minutos. 
+                    <strong>Ese software transformó una hora de espera en 3 minutos de comodidad.</strong>
+                </p>
+
+                <h3>🧪 Actividad 2: Analizando Componentes</h3>
+                <p>
+                    Vamos a descomponer una aplicación que todos conoces: <strong>WhatsApp</strong>. 
+                    Identifica sus elementos:
+                </p>
+
+                <div class="interactive-box">
+                    <h4>📱 WhatsApp - Desglose:</h4>
+                    <ul class="feature-list">
+                        <li><strong>Código fuente:</strong> Instrucciones en Java/Kotlin (Android) o Swift (iOS) 
+                        que dicen "cuando el usuario toque enviar, guarda el mensaje y envíalo al servidor"</li>
+                        
+                        <li><strong>Datos:</strong> Tus mensajes, contactos, fotos, videos, audios</li>
+                        
+                        <li><strong>Documentación:</strong> Las preguntas frecuentes, tutoriales de uso, 
+                        políticas de privacidad</li>
+                        
+                        <li><strong>Configuraciones:</strong> El brillo de la pantalla, el tamaño de la fuente, 
+                        las notificaciones activadas o desactivadas</li>
+                    </ul>
+                </div>
+
+                <h3>🎯 Actividad 3: El Rol del Desarrollador</h3>
+                <p>
+                    Imagina que eres desarrollador de software y te contratan para crear una aplicación 
+                    para un hospital en Cuenca. Tu trabajo no es solo escribir código:
+                </p>
+
+                <ul class="feature-list">
+                    <li><strong>Analizas:</strong> ¿Qué necesitan los médicos? ¿Qué información deben registrar? 
+                    ¿Cómo protegen los datos de los pacientes?</li>
+                    
+                    <li><strong>Diseñas:</strong> ¿Cómo será la interfaz? ¿Qué tecnologías usarás? 
+                    ¿Cómo se conectará con otros sistemas?</li>
+                    
+                    <li><strong>Desarrollas:</strong> Escribes código limpio, eficiente y mantenible</li>
+                    
+                    <li><strong>Pruebas:</strong> Detectas y corriges errores antes de que afecten a un paciente</li>
+                    
+                    <li><strong>Mantienes:</strong> Actualizas el sistema cuando hay nuevas necesidades</li>
+                </ul>
+
+                <div class="reflection-box">
+                    <p>
+                        "Un desarrollador no solo escribe código: construye soluciones que impactan vidas reales. 
+                        Tu trabajo puede salvar vidas, mejorar la educación o conectar comunidades."
+                    </p>
+                </div>
+
+                <h3>🚀 Tendencias Actuales (2025-2026)</h3>
+                <p>El mundo del software evoluciona rápidamente. Estas son las tendencias que están transformando la industria:</p>
+
+                <ul class="feature-list">
+                    <li><strong>Inteligencia Artificial:</strong> La IA ya no es solo una herramienta, es un colaborador 
+                    activo que genera código, detecta errores y optimiza rendimiento</li>
+                    
+                    <li><strong>Low-Code/No-Code:</strong> Plataformas que permiten crear apps con poca o ninguna 
+                    programación, democratizando el desarrollo</li>
+                    
+                    <li><strong>Computación en la Nube:</strong> El software ya no vive en una sola máquina, 
+                    sino en servidores accesibles desde cualquier lugar</li>
+                    
+                    <li><strong>DevOps y automatización:</strong> Integración continua, entrega continua, 
+                    pruebas automatizadas</li>
+                    
+                    <li><strong>Seguridad integrada (DevSecOps):</strong> La seguridad ya no es una fase final, 
+                    se integra desde el inicio</li>
+                    
+                    <li><strong>Software sostenible:</strong> Optimización del consumo energético, 
+                    reducción de recursos, diseño eficiente</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <h4>💭 Reflexión:</h4>
+                    <p>
+                        El futuro del software no pertenece al que más código escribe, sino al que mejor entiende, 
+                        adapta e integra la tecnología. <strong>Tú puedes ser parte de ese futuro.</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN PRÁCTICA -->
+        <section id="practica" class="section">
+            <div class="card">
+                <h2>🔧 Desarrollo Práctico: Manos a la Obra</h2>
+                
+                <p style="margin-bottom: 1.5rem;">
+                    Es momento de poner en práctica lo aprendido. Vamos a crear algo tangible, algo que puedas 
+                    ver funcionar y modificar. No te preocupes si es tu primera vez: te guiaré paso a paso.
+                </p>
+
+                <h3> Ejemplo Práctico: Tu Primera "Aplicación" de Consola</h3>
+                <p>
+                    Vamos a simular un sistema básico de registro de estudiantes usando conceptos que ya conoces. 
+                    Imagina que estás creando software para el sistema de matrícula de tu colegio.
+                </p>
+
+                <div class="code-block">
+                    <code>
+# Sistema de Registro de Estudiantes - Ecuador 2026<br><br>
+# DATOS: Información que el programa procesa<br>
+estudiantes = [<br>
+    {"nombre": "María González", "grado": "10mo", "promedio": 8.5},<br>
+    {"nombre": "Carlos Pérez", "grado": "10mo", "promedio": 9.2},<br>
+    {"nombre": "Ana López", "grado": "10mo", "promedio": 7.8}<br>
+]<br><br>
+# CÓDIGO FUENTE: Instrucciones que procesan los datos<br>
+def mostrar_estudiantes():<br>
+    print("=== SISTEMA DE REGISTRO - COLEGIO FISCAL ===")<br>
+    print("Lista de Estudiantes de 10mo Grado\\n")<br>
+    <br>
+    for estudiante in estudiantes:<br>
+        print(f"Nombre: {estudiante['nombre']}")<br>
+        print(f"Grado: {estudiante['grado']}")<br>
+        print(f"Promedio: {estudiante['promedio']}")<br>
+        print("-" * 40)<br>
+    <br>
+    # DOCUMENTACIÓN: Comentarios que explican el código<br>
+    # Esta función muestra la lista de estudiantes registrados<br>
+    # con su información académica básica<br><br>
+mostrar_estudiantes()
+                    </code>
+                </div>
+
+                <h4>🔍 Análisis del ejemplo:</h4>
+                <ul class="feature-list">
+                    <li><strong>Software de Aplicación:</strong> Este programa resuelve una necesidad específica 
+                    (registrar estudiantes)</li>
+                    
+                    <li><strong>Datos:</strong> La lista de estudiantes con sus nombres, grados y promedios</li>
+                    
+                    <li><strong>Código fuente:</strong> Las instrucciones en Python que procesan y muestran la información</li>
+                    
+                    <li><strong>Documentación:</strong> Los comentarios que explican qué hace cada parte</li>
+                    
+                    <li><strong>Configuración:</strong> Podrías agregar parámetros como el año lectivo, 
+                    el nombre del colegio, etc.</li>
+                </ul>
+
+                <div class="interactive-box">
+                    <h4>🎮 Experimenta:</h4>
+                    <p>Si tuvieras Python instalado, podrías:</p>
+                    <ul class="feature-list">
+                        <li>Agregar más estudiantes a la lista</li>
+                        <li>Calcular el promedio general del curso</li>
+                        <li>Filtrar estudiantes con promedio mayor a 8</li>
+                        <li>Guardar los datos en un archivo</li>
+                    </ul>
+                </div>
+
+                <h3>🎯 TU DESAFÍO: Crea tu Propio Sistema</h3>
+                
+                <div class="challenge-box">
+                    <h3>🚀 Desafío Creativo: "Software para mi Comunidad"</h3>
+                    
+                    <p style="margin-bottom: 1rem;">
+                        <strong>Situación:</strong> Imagina que tu barrio o comunidad tiene un problema que 
+                        el software podría resolver. Podría ser:
+                    </p>
+                    
+                    <ul class="feature-list" style="margin-bottom: 1.5rem;">
+                        <li>Un sistema para organizar la recolección de basura reciclable</li>
+                        <li>Una app para reportar baches o problemas de alumbrado</li>
+                        <li>Un registro de actividades del centro comunitario</li>
+                        <li>Un sistema de trueque o intercambio de productos locales</li>
+                        <li>Una plataforma para coordinar voluntariados</li>
+                    </ul>
+
+                    <h4>Tu misión (si decides aceptarla):</h4>
+                    
+                    <ol style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                        <li><strong>Identifica</strong> un problema real de tu comunidad</li>
+                        
+                        <li><strong>Diseña</strong> en papel la solución de software:
+                            <ul style="margin-top: 0.5rem; margin-left: 1.5rem;">
+                                <li>¿Qué tipo de software sería? (aplicación móvil, web, sistema de escritorio)</li>
+                                <li>¿Quiénes serían los usuarios?</li>
+                                <li>¿Qué datos necesitaría procesar?</li>
+                            </ul>
+                        </li>
+                        
+                        <li><strong>Describe</strong> los componentes:
+                            <ul style="margin-top: 0.5rem; margin-left: 1.5rem;">
+                                <li>Código fuente: ¿Qué instrucciones principales tendría?</li>
+                                <li>Datos: ¿Qué información manejaría?</li>
+                                <li>Documentación: ¿Qué manuales necesitaría?</li>
+                                <li>Configuraciones: ¿Qué parámetros se podrían ajustar?</li>
+                            </ul>
+                        </li>
+                        
+                        <li><strong>Reflexiona</strong> sobre el impacto:
+                            <ul style="margin-top: 0.5rem; margin-left: 1.5rem;">
+                                <li>¿Cómo mejoraría la vida de las personas?</li>
+                                <li>¿Qué aspectos éticos debes considerar? (privacidad, seguridad, acceso)</li>
+                                <li>¿Qué tipo de desarrollador necesitarías ser para crearlo?</li>
+                            </ul>
+                        </li>
+                        
+                        <li><strong>Presenta</strong> tu propuesta en un documento o presentación visual</li>
+                    </ol>
+
+                    <div class="highlight-box" style="background: rgba(255,255,255,0.2);">
+                        <p><strong>💡 Criterios de evaluación:</strong></p>
+                        <ul class="feature-list">
+                            <li>Claridad en la identificación del problema</li>
+                            <li>Creatividad en la solución propuesta</li>
+                            <li>Comprensión de los componentes del software</li>
+                            <li>Reflexión sobre el impacto social y ético</li>
+                            <li>Viabilidad técnica de la propuesta</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="reflection-box">
+                    <p>
+                        "Recuerda: el mejor software no es el más complejo, sino el que mejor resuelve 
+                        un problema real de las personas. Tú tienes el poder de crear ese cambio."
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN EVALUACIÓN -->
+        <section id="evaluacion" class="section">
+            <div class="card">
+                <h2>🎮 Evaluación Lúdica: Pon a Prueba tu Conocimiento</h2>
+                
+                <p style="margin-bottom: 1.5rem;">
+                    ¡Es hora del juego! Responde las siguientes preguntas para verificar cuánto has aprendido. 
+                    Cada respuesta correcta te acerca a convertirte en un experto en software. ¡Vamos!
+                </p>
+
+                <div class="quiz-container" id="quizContainer">
+                    <div id="quizStart">
+                        <div style="text-align: center; padding: 2rem;">
+                            <div style="font-size: 4rem; margin-bottom: 1rem;">🎯</div>
+                            <h3 style="color: var(--primary); margin-bottom: 1rem;">¿Listo para el desafío?</h3>
+                            <p style="margin-bottom: 2rem;">
+                                5 preguntas • Retroalimentación inmediata • Aprende mientras juegas
+                            </p>
+                            <button class="start-quiz-btn" onclick="startQuiz()">
+                                ¡Comenzar Evaluación! 🚀
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="quizContent" style="display: none;">
+                        <div class="question" id="questionContainer">
+                            <!-- Las preguntas se generarán dinámicamente -->
+                        </div>
+                        
+                        <div class="feedback" id="feedback"></div>
+                        
+                        <button class="next-btn" id="nextBtn" onclick="nextQuestion()" style="display: none;">
+                            Siguiente Pregunta →
+                        </button>
+                    </div>
+
+                    <div id="quizResults" style="display: none;">
+                        <div class="score-display" id="scoreDisplay"></div>
+                        <div style="text-align: center; padding: 2rem;">
+                            <div id="resultMessage" style="font-size: 1.2rem; margin-bottom: 2rem;"></div>
+                            <button class="start-quiz-btn" onclick="restartQuiz()">
+                                Intentar de Nuevo 🔄
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>Diseñado por: Edwin Méndez J.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8;">
+            Con ❤️ para los futuros desarrolladores de Ecuador
+        </p>
+    </footer>
+
+    <script>
+        // Navegación entre secciones
+        function showSection(sectionId) {
+            // Ocultar todas las secciones
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Mostrar la sección seleccionada
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Scroll al inicio
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Datos del quiz
+        const questions = [
+            {
+                question: "¿Cuál es la principal diferencia entre hardware y software?",
+                options: [
+                    "El hardware es intangible y el software es tangible",
+                    "El hardware es físico y el software es lógico/intangible",
+                    "No hay diferencia, son lo mismo",
+                    "El hardware es más importante que el software"
+                ],
+                correct: 1,
+                explanation: "¡Exacto! El hardware son los componentes físicos (lo que puedes tocar) mientras que el software son las instrucciones y programas (intangible) que le dicen al hardware qué hacer."
+            },
+            {
+                question: "Si estás usando WhatsApp para chatear con tus amigos, ¿qué tipo de software estás utilizando?",
+                options: [
+                    "Software de Sistema",
+                    "Software de Desarrollo",
+                    "Software de Aplicación",
+                    "Software de Configuración"
+                ],
+                correct: 2,
+                explanation: "¡Correcto! WhatsApp es un software de aplicación porque está diseñado para resolver una necesidad específica del usuario: comunicarse con otras personas."
+            },
+            {
+                question: "¿Cuál de estos NO es un elemento que compone el software?",
+                options: [
+                    "Código fuente",
+                    "Datos",
+                    "Hardware",
+                    "Documentación"
+                ],
+                correct: 2,
+                explanation: "¡Bien! El hardware NO es parte del software. El hardware es el componente físico. El software está compuesto por código fuente, datos, documentación y configuraciones."
+            },
+            {
+                question: "Un sistema operativo como Windows o Linux es un ejemplo de:",
+                options: [
+                    "Software de Aplicación",
+                    "Software de Desarrollo",
+                    "Software de Sistema",
+                    "Software Educativo"
+                ],
+                correct: 2,
+                explanation: "¡Perfecto! Los sistemas operativos son software de sistema porque gestionan y controlan el hardware, sirviendo como base para que otros programas puedan ejecutarse."
+            },
+            {
+                question: "¿Cuál de estas tendencias actuales en desarrollo de software se refiere a crear aplicaciones con poca o ninguna programación?",
+                options: [
+                    "Inteligencia Artificial",
+                    "Low-Code/No-Code",
+                    "DevOps",
+                    "Blockchain"
+                ],
+                correct: 1,
+                explanation: "¡Excelente! Las plataformas Low-Code/No-Code permiten crear aplicaciones con poca o ninguna programación, democratizando el desarrollo y permitiendo que usuarios no técnicos participen."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+
+        function startQuiz() {
+            document.getElementById('quizStart').style.display = 'none';
+            document.getElementById('quizContent').style.display = 'block';
+            currentQuestion = 0;
+            score = 0;
+            showQuestion();
+        }
+
+        function showQuestion() {
+            answered = false;
+            const question = questions[currentQuestion];
+            const container = document.getElementById('questionContainer');
+            const feedback = document.getElementById('feedback');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            feedback.className = 'feedback';
+            feedback.style.display = 'none';
+            nextBtn.style.display = 'none';
+            
+            let optionsHTML = '';
+            question.options.forEach((option, index) => {
+                optionsHTML += `
+                    <div class="option" onclick="selectOption(${index})" data-index="${index}">
+                        ${option}
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = `
+                <h3>Pregunta ${currentQuestion + 1} de ${questions.length}</h3>
+                <p style="margin-bottom: 1.5rem; font-size: 1.1rem;">${question.question}</p>
+                <div class="options">
+                    ${optionsHTML}
+                </div>
+            `;
+        }
+
+        function selectOption(index) {
+            if (answered) return;
+            answered = true;
+            
+            const question = questions[currentQuestion];
+            const options = document.querySelectorAll('.option');
+            const feedback = document.getElementById('feedback');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            options.forEach((option, i) => {
+                option.style.pointerEvents = 'none';
+                if (i === index) {
+                    option.classList.add('selected');
+                    if (i === question.correct) {
+                        option.classList.add('correct');
+                        score++;
+                    } else {
+                        option.classList.add('incorrect');
+                    }
+                }
+                if (i === question.correct) {
+                    option.classList.add('correct');
+                }
+            });
+            
+            feedback.textContent = question.explanation;
+            feedback.className = 'feedback show ' + (index === question.correct ? 'correct' : 'incorrect');
+            
+            if (currentQuestion < questions.length - 1) {
+                nextBtn.style.display = 'inline-block';
+            } else {
+                nextBtn.textContent = 'Ver Resultados 🏆';
+                nextBtn.style.display = 'inline-block';
+                nextBtn.onclick = showResults;
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quizContent').style.display = 'none';
+            document.getElementById('quizResults').style.display = 'block';
+            
+            const percentage = (score / questions.length) * 100;
+            let message = '';
+            let emoji = '';
+            
+            if (percentage === 100) {
+                message = '¡Perfecto! Eres un experto en software. ¡Sigue así!';
+                emoji = '🏆';
+            } else if (percentage >= 80) {
+                message = '¡Excelente trabajo! Tienes un gran dominio del tema.';
+                emoji = '🎉';
+            } else if (percentage >= 60) {
+                message = '¡Bien hecho! Pero aún puedes mejorar. Repasa los conceptos.';
+                emoji = '👍📚';
+            } else {
+                message = 'Sigue practicando. ¡El aprendizaje es un proceso!';
+                emoji = '💪📖';
+            }
+            
+            document.getElementById('scoreDisplay').innerHTML = `
+                <div style="font-size: 3rem; margin-bottom: 1rem;">${emoji}</div>
+                <div>Tu Puntaje</div>
+                <div style="font-size: 3rem; font-weight: bold; margin: 1rem 0;">
+                    ${score}/${questions.length}
+                </div>
+                <div style="font-size: 1.5rem;">${percentage}%</div>
+            `;
+            
+            document.getElementById('resultMessage').innerHTML = `
+                <div style="margin-bottom: 1rem;">${message}</div>
+                <div style="font-size: 1rem; color: var(--gray);">
+                    ${percentage === 100 ? '¡Dominas todos los conceptos!' : 
+                      percentage >= 60 ? 'Vas por buen camino, sigue aprendiendo' : 
+                      'Te invitamos a repasar el contenido y volver a intentar'}
+                </div>
+            `;
+        }
+
+        function restartQuiz() {
+            document.getElementById('quizResults').style.display = 'none';
+            document.getElementById('quizStart').style.display = 'block';
+            document.getElementById('nextBtn').textContent = 'Siguiente Pregunta →';
+            document.getElementById('nextBtn').onclick = nextQuestion;
+        }
+    </script>
+</body>
+</html>
